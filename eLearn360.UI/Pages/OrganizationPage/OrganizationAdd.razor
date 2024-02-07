@@ -1,0 +1,85 @@
+﻿@page "/organizationadd"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsSuperAdmin)]
+
+<PageTitle>Organisme</PageTitle>
+
+<div class="container my-5">
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <EditForm Model="Organization" OnValidSubmit="@HandleValidRequest">
+
+            <h5 class="col title">@(Organization.Id == Guid.Empty ? "Créer" : "Modifier") un organisme</h5>
+
+            <div class="container justify-content-center col-12 col-sm-8">
+                <div class="row g-3 py-4 px-sm-5">
+                    <div class="col-md-12">
+                        <label for="inputName" class="form-label">Nom</label>
+                        <InputText class="form-control" id="inputName" @bind-Value="Organization.Name" />
+                        <ValidationMessage For="@(() => Organization.Name)" />
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Adresse</label>
+                        <InputText class="form-control" id="inputAddress" @bind-Value="Organization.Address" />
+                        <ValidationMessage For="@(() => Organization.Address)" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputZip" class="form-label">Code postal</label>
+                        <InputText class="form-control" id="inputZip" @bind-Value="Organization.ZipCode" />
+                        <ValidationMessage For="@(() => Organization.ZipCode)" />
+                    </div>
+                    <div class="col-md-8">
+                        <label for="inputCity" class="form-label">Ville</label>
+                        <InputText class="form-control" id="inputCity" @bind-Value="Organization.City" />
+                        <ValidationMessage For="@(() => Organization.City)" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputCountry" class="form-label">Pays</label>
+                        <InputText class="form-control" id="inputCountry" @bind-Value="Organization.Country" />
+                        <ValidationMessage For="@(() => Organization.Country)" />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="inputPhone" class="form-label">Téléphone</label>
+                        <InputText class="form-control" id="inputPhone" @bind-Value="Organization.Phone" placeholder="+32..." />
+                        <ValidationMessage For="@(() => Organization.Phone)" />
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="inputMail" class="form-label">Adresse email</label>
+                        <InputText class="form-control" id="inputMail" @bind-Value="Organization.Email" />
+                        <ValidationMessage For="@(() => Organization.Email)" />
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <label for="inputWebsite" class="form-label">Site web</label>
+                        <InputText class="form-control" id="inputWebsite" @bind-Value="Organization.Website" />
+                        <ValidationMessage For="@(() => Organization.Website)" />
+                    </div>
+
+                    <div class="col-md-12 mb-4">
+                        <label for="inputImage" class="form-label">Image</label>
+                        <InputFile id="inputImage" class="form-control custom-file" OnChange="@SelectedImage" accept="image/jpeg,image/x-png" />
+                        @if (ImgUrl != null)
+                        {
+                            <div class="mt-3">
+                                <img src="@ImgUrl" class="editImage" />
+                            </div>
+                        }
+                    </div>
+
+                <div class="d-flex justify-content-between w-100">
+                        <NavLink href="organizationlistoverview" class="btn btn-global-outline"><i class="bi bi-caret-left-fill me-2"></i>Liste des organismes</NavLink>
+                    <button type="submit" class="btn btn-global">Enregistrer</button>
+                </div>
+                </div>
+
+                <DataAnnotationsValidator />
+            </div>
+
+        </EditForm>
+    }
+</div>

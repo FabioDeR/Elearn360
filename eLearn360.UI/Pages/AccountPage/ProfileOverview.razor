@@ -1,0 +1,116 @@
+﻿@page "/profileoverview/{UserId:guid}"
+@page "/profileoverview/{UserId:guid}/{Role}"
+@page "/profileoverview/{UserId:guid}/{Role}/{GroupId:guid}"
+
+@using eLearn360.UI.Shared.Component
+@attribute [Authorize(Roles = "Professor, Admin, SuperAdmin")]
+
+
+<div class="container my-5">
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <h5 class="col title">Mon profil</h5>
+
+        <div class="row g-4 mt-0 mt-md-4">
+            <div class="col-12 col-md-4 text-end">
+                <img src="@Item.ImageUrl" class="border shadow-sm edit-image" />
+                <div class="row mt-5">
+                    <AuthorizeView Roles="Admin, SuperAdmin">
+                        <div>
+                            <a href="profileedit/@UserId/@Role/@GroupId" title="Éditer" class="btn btn-global"><i class="bi bi-pencil-square me-2"></i>Modifier le profil</a>
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-danger fw-bold" @onclick="()=>OpenDeleteDialog()">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                Réinitialiser le mot de passe
+                            </button>
+                        </div>
+                    </AuthorizeView>
+                </div>
+
+            </div>
+            <div class="col-12 offset-md-1 col-md-7">
+
+                <h4 class="fw-bold mb-5">@Item.FirstName @Item.LastName</h4>
+
+                <h6 class="fw-bold text-uppercase mb-4" style="color:#9D9D9D">Informations principales</h6>
+
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Téléphone</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p><a href="phoneto:@Item.Phone" class="link-text">@Item.Phone</a></p>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Adresse</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p class="mb-0">@Item.Address</p>
+                        <p class="mb-0">@Item.ZipCode @Item.City</p>
+                        <p>@Item.Country</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Email</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p><a href="mailto:@Item.LoginMail" class="link-text">@Item.LoginMail</a></p>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold text-uppercase my-4" style="color:#9D9D9D">Informations complémentaires</h6>
+
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Date de naissance</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p>@Item.Birthday.ToShortDateString()</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Genre</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p>@GenderString</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <button @onclick="CheckRole" class="btn btn-global-outline mb-4">Retour</button>
+
+    }
+
+</div>
+
+@if (DeleteDialogOpen)
+{
+    <eLearn360.UI.Components.ModalDialog Title="Confirmation"
+                                     Text="Êtes-vous sûr de vouloir réinitialiser le mot de passe de cet utilisateur ?"
+                                     OnClose="@OnDeleteDialogClose"
+                                     DialogType="@Components.ModalDialog.ModalDialogType.YesCancel">
+    </eLearn360.UI.Components.ModalDialog>
+}
+
+

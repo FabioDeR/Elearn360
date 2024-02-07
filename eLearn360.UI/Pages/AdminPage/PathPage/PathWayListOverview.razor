@@ -1,0 +1,57 @@
+﻿@page "/pathlistoverview"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+<PageTitle>Parcours</PageTitle>
+
+<div class="container my-5">
+
+    <div class="mt-5 mb-4 d-flex justify-content-between">
+        <h5 class="mb-0 align-self-end title">Liste des parcours</h5>
+        <a href="pathedit" class="btn btn-global"><span class="oi oi-plus me-2" aria-hidden="true"></span>Ajouter un parcours</a>
+    </div>
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <table class="table mb-5">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Description</th>
+                    <th scope="col" class="text-end">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (PathWayList.Count == 0)
+                {
+                    <tr>
+                        <td class="fst-italic text-center">@_message</td>
+                        <td></td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var PathWay in PathWayList)
+                    {
+                        <tr>
+                            <td class="fw-bold">@PathWay.Name</td>
+                            <td>@PathWay.Description</td>
+                            <td class="text-end">
+                                <a class="btn btn-global me-1" href="pathedit/@PathWay.Id" title="Modifier"><span class="oi oi-pencil" aria-hidden="true"></span></a>
+                                <a class="btn btn-global me-1" href="organizepath/@PathWay.Id/Admin" title="Organiser l'ordre des cours"><i class="fa fa-list-ol" aria-hidden="true"></i></a>
+                                <a class="btn btn-global me-1" href="linkpathtogroup/@PathWay.Id" title="Lier à une classe ou un groupe"><i class="fa fa-link" aria-hidden="true"></i></a>
+                                <button type="button" class="btn btn-danger" @onclick="() => Delete(PathWay.Id)" title="Supprimer"><span class="oi oi-minus" aria-hidden="true"></span></button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <a href="organizationoverview" class="btn btn-global-outline mb-4"><i class="bi bi-caret-left-fill me-2"></i>Mon organisme</a>
+    }
+</div>

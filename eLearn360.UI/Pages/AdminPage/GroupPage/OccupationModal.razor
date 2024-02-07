@@ -1,0 +1,44 @@
+﻿@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+<div class="modalDialog fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title font-weight-bold">
+                    Souhaitez-vous ajouter une ou plusieurs fonctions pour cet utilisateur ?
+                </h4>
+                <span type="button" class="close fw-bold fs-3 text-muted" @onclick="@ModalCancel"><i class="bi bi-x-circle"></i></span>
+            </div>
+            <div class="modal-body">
+                @if (_isLoading)
+                {
+                    <Loader />
+                }
+                else
+                {
+                    <div class="my-4">
+                        <h5 class="mb-1">Fonctions disponibles :</h5>
+                        <a href="staffoccupationeo" class="link-text"><span class="oi oi-pencil me-2" aria-hidden="true"></span>Modifier les fonctions</a>
+                    </div>
+                    <CheckBoxList Data="@StaffOccupationList"
+                              TextField="@((item)=>item.Name)"
+                              ValueField="@((item)=>item.Id)"
+                              SelectedValues="@UserOccupationList" />
+
+                    <div class="d-flex px-0 my-4">
+                        <h5 class="me-3">Titulaire :</h5>
+                        <label for="myToggle" class="toggle">
+                            <input type="checkbox" class="toggle__input d-none" name="" id="myToggle" @bind="@isHeadTeacher" />
+                            <div class="toggle__fill"></div>
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-global" @onclick="@ModalOk">Ajouter</button>
+                <button type="button" class="btn btn-global-outline" @onclick="@ModalCancel">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>

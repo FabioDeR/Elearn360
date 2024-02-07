@@ -1,0 +1,145 @@
+﻿@page "/courseedit"
+@page "/courseedit/{id:guid}"
+@using eLearn360.UI.Components.CourseComponent
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsProfessor)]
+<PageTitle>Cours</PageTitle>
+
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="d-flex justify-content-center mb-3">
+            <div class="d-flex w-50 justify-content-around">
+                <button class="circleTab" @onclick="ShowCreateCourse">1</button>
+                <span class="line"></span>
+                <button class="circleTab @InactiveClassAdd" disabled="@IsInactive" @onclick="ShowAddSections">2</button>
+                <span class="line"></span>
+                <button class="circleTab @InactiveClassOrganize" disabled="@IsInactive" @onclick="ShowOrganizeSections">3</button>
+            </div>
+        </div>
+
+        <div>
+            @if (IsShowCreateCourse)
+            {
+                <div class="p-4 border shadow">
+
+                    <h3 class="title mb-4">Créer votre cours</h3>
+
+                    <EditForm Model="@CourseData" OnValidSubmit="@HandleValidRequest">
+                        <div class="form-group">
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-8">
+                                    <label for="inputName" class="col-form-label">Nom du cours</label>
+                                    <div>
+                                        <InputText class="form-control" @bind-Value="@CourseData.Name" id="inputName" placeholder="Nom du cours"></InputText>
+                                        <ValidationMessage For="@(() => CourseData.Name)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 offset-2">
+                                    <label for="inputIsPrivate" class="col-form-label px-0 labelPrivate">@(CourseData.PrivateCourse ? "Cours Privée" : "Cours Public")</label>
+                                    <div>
+                                        <label for="myToggle" class="toggle">
+                                            <InputCheckbox class="toggle__input d-none" name="" id="myToggle" @bind-Value="@CourseData.PrivateCourse" />
+                                            <div class="toggle__fill"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label for="inputDescription" class="col-form-label">Description</label>
+                            <div class="col mb-3">
+                                <InputTextArea class="form-control" @bind-Value="@CourseData.Description" id="inputDescription" placeholder="Ajoutez une brève description"></InputTextArea>
+                                <ValidationMessage For="@(() => CourseData.Description)" />
+                            </div>
+
+
+
+                            <div class="row mb-5">
+                                <div class="col-4">
+                                    <label for="inputLevel" class="col-form-label">Niveau</label>
+                                    <div>
+                                        <InputSelect class="form-select" @bind-Value="@CourseData.LevelId" id="inputLevel">
+                                            <option selected value="0" disabled>----</option>
+                                            @foreach (var lev in LevelList)
+                                            {
+                                                <option value="@lev.Id">@lev.Name</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => CourseData.LevelId)" />
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <label for="inputCategory" class="col-form-label">Catégorie</label>
+                                    <div>
+                                        <InputSelect class="form-select" @bind-Value="@CourseData.CategoryId" id="inputCategory">
+                                            <option selected value="0" disabled>----</option>
+                                            @foreach (var cat in CategoryList)
+                                            {
+                                                <option value="@cat.Id">@cat.Name</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => CourseData.CategoryId)" />
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <label for="inputImage" class="col-form-label">Image</label>
+                                    <div>
+                                        <InputFile id="inputImage" class="form-control custom-file" OnChange="@SelectedImage" multiple accept="image/jpeg,image/x-png" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <eLearn360.UI.Components.CkeditorComponent.CkeditorComponent @bind-EditorValue="@CourseData.Content" EditorHeight="600px" EditorWidth="100%"></eLearn360.UI.Components.CkeditorComponent.CkeditorComponent>
+
+                            <ValidationMessage For="@(() => CourseData.Content)" />
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-global mt-5">Suivant</button>
+                        </div>
+
+                        <DataAnnotationsValidator />
+                    </EditForm>
+                </div>
+            }
+
+
+
+            @if (IsShowAddSections)
+            {
+                <div class="p-4 border shadow">
+
+                    <CascadingValue Value="@CourseId">
+                        <AddSections />
+                    </CascadingValue>
+
+                    <div class="d-flex justify-content-end">
+                        <button @onclick="ShowOrganizeSections" class="btn btn-global mt-5">Suivant</button>
+                    </div>
+                </div>
+            }
+
+
+            @if (IsShowOrganizeSections)
+            {
+                <div class="p-4 border shadow">
+                    <CascadingValue Value="@CourseId">
+                        <OrganizeSections />
+                    </CascadingValue>
+                </div>
+            }
+        </div>
+    }
+</div>
+

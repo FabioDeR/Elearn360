@@ -1,0 +1,37 @@
+﻿@page "/groupoverview/{GroupId:guid}"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+@if (Group != null)
+{
+    <PageTitle>@Group.Name</PageTitle>
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="container my-5">
+            <div class="row col-sm-8 offset-sm-2">
+                <div class="col-12 col-sm-8 mb-4">
+                    <h5 class="title mb-4">@Group.Name</h5>
+                    <img src="@Group.ImageUrl" />
+                </div>
+
+                <div class="col-12 col-sm-4 mt-5">
+                    <a class="link-text d-block mb-3" href="groupedit/@Group.Id"><span class="oi oi-pencil me-3" />Modifier</a>
+                    <a class="link-text d-block mb-3" href="usergrouplistoverview/@Group.Id"><span class="oi oi-person me-3" />Voir les utilisateurs</a>
+                </div>
+
+                <div>
+                    <a href="grouplistoverview" class="btn btn-global-outline mb-4">Retour</a>
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+}

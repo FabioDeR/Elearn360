@@ -1,0 +1,90 @@
+.link-title {
+    font-size: 16px;
+}
+
+.nav-item ::deep a {
+    color: white !important;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    padding-left : 1.5rem;
+}
+
+    .nav-item ::deep a:hover {
+        background-color: #01bafd;
+        transition: ease-in-out .20s;
+    }
+
+.dropdown-divider {
+    border-top: 1px solid #01bafd;
+}
+
+
+    /*==== SEARCH BUTTON ====*/
+
+    button:active {
+    background-color: #01bafd;
+}
+
+button:not(:disabled):not(.disabled):active {
+    color: white;
+    background-color: #01bafd;
+    border-color: white;
+}
+
+button:hover {
+    color: white;
+    background-color: #01bafd;
+}
+
+button:focus {
+    color: white;
+    background-color: #01bafd;
+    outline: 2px solid #01bafd;
+    box-shadow: 0 0 0 1px #01bafd;
+}
+
+/*==== SEARCH BAR ====*/
+
+.form-select:focus {
+    outline: 2px solid #01bafd;
+    box-shadow: 0 0 0 1px #01bafd;
+}
+
+.dropdown-menu {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin-top: 0;
+}
+
+    .dropdown-menu.show {
+        display: block;
+    }
+
+/*==== LOGIN ICON ====*/
+
+.oi {
+    font-size: 1.3rem;
+    top: 3px;
+}
+
+.navbar-toggler {
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 1px;
+}
+    /*==== RESPONSIVE ====*/
+
+    @media (max-width: 1199.98px) {
+
+        .nav-link {
+            font-size: 14px
+        }
+
+        .dropdown-menu {
+            font-size: 14px
+        }
+
+        .form-control {
+            font-size: 14px
+        }
+    }

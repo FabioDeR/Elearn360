@@ -1,0 +1,52 @@
+﻿@page "/pathlistoverviewteacher"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsProfessor)]
+<PageTitle>Parcours</PageTitle>
+
+<div class="container my-5">
+
+    <div class="mt-5 mb-4 d-flex justify-content-between">
+        <h5 class="mb-0 align-self-end title">Liste des parcours</h5>
+    </div>
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Description</th>
+                    <th scope="col" class="text-end">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (PathWayList.Count == 0)
+                {
+                    <tr>
+                        <td class="fst-italic text-center">@_message</td>
+                        <td></td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var PathWay in PathWayList)
+                    {
+                        <tr>
+                            <td class="fw-bold">@PathWay.Name</td>
+                            <td>@PathWay.Description</td>
+                            <td class="text-end">
+                                    <a class="btn btn-global me-1" href="addcourses/@PathWay.Id" title="Ajouter un cours"><span class="oi oi-plus" aria-hidden="true"></span></a>
+                                    <a class="btn btn-global" href="organizepath/@PathWay.Id/Teacher" title="Organiser l'ordre des cours"><i class="fa fa-list-ol" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+</div>

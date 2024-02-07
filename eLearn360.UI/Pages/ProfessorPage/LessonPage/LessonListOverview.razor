@@ -1,0 +1,84 @@
+﻿@page "/lessonlistoverview"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsProfessor)]
+<PageTitle>Leçons</PageTitle>
+
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="mt-5 mb-4 d-flex justify-content-between">
+            <h5 class="mb-0 align-self-end title">Leçons privées</h5>
+            <a class="btn btn-global" href="lessonedit"><span class="oi oi-plus me-2"></span>Créer une leçon</a>
+        </div>
+
+        @if (PrivateLessons.Count == 0)
+        {
+            <p class="fst-italic text-muted">Vous n'avez pas encore créé de leçon</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Description</th>
+                        <th scope="col" class="text-end">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lesson in PrivateLessons)
+                    {
+                        <tr>
+                            <td class="fw-bold">@lesson.Name</td>
+                            <td>@lesson.Description</td>
+                            <td class="d-flex align-items-center justify-content-end">
+                                @*<a class="btn btn-global me-1" title="Voir" href="lessonoverview/@lesson.Id"><span class="oi oi-eye"></span></a>*@
+                                <a class="btn btn-global me-1" title="Modifier" href="lessonedit/@lesson.Id"><span class="oi oi-pencil"></span></a>
+                                <button class="btn btn-global" title="Copier" @onclick="() => Duplicate((lesson.Id).ToString())"><i class="fas fa-copy"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <h5 class="mt-5 mb-4 title">Leçons publiques</h5>
+
+        @if (PublicLessons.Count == 0)
+        {
+            <p class="fst-italic text-muted">Il n'y a pas encore de leçon publique</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Description</th>
+                        <th scope="col" class="text-end">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var lesson in PublicLessons)
+                    {
+                        <tr>
+                            <td class="fw-bold">@lesson.Name</td>
+                            <td>@lesson.Description</td>
+                            <td class="d-flex col-1 align-items-center justify-content-end">
+                                <a class="btn btn-global me-1" title="Voir" href="lessonoverview/@lesson.Id"><span class="oi oi-eye" aria-hidden="true"></span></a>
+                                <button class="btn btn-global" title="Copier" @onclick="() => Duplicate((lesson.Id).ToString())"><i class="fas fa-copy"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+</div>

@@ -1,0 +1,59 @@
+﻿@page "/lessonedit"
+@page "/lessonedit/{id:guid}"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsProfessor)]
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="p-4 border shadow">
+
+            <h3 class="title mb-4">Créer votre leçon</h3>
+
+            <EditForm Model="@LessonData" OnValidSubmit="@HandleValidRequest">
+                <div class="form-group">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="col-12 col-md-8">
+                            <label for="inputName" class="col-form-label">Nom de la leçon</label>
+                            <div>
+                                <InputText class="form-control" @bind-Value="@LessonData.Name" id="inputName" placeholder="Nom de la leçon"></InputText>
+                                <ValidationMessage For="@(() => LessonData.Name)" />
+                            </div>
+                        </div>
+                        <div class="col-md-2 offset-2">
+                            <label for="inputIsPrivate" class="col-form-label text-left px-0 labelPrivate">@(LessonData.PrivateLesson ? "Leçon Privée" : "Leçon Publique")</label>
+                            <div>
+                                <label for="myToggle" class="toggle">
+                                    <InputCheckbox class="toggle__input d-none" name="" id="myToggle" @bind-Value="@LessonData.PrivateLesson" />
+                                    <div class="toggle__fill"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label for="inputDescription" class="col-form-label">Description</label>
+                    <div class="col mb-5">
+                        <InputTextArea class="form-control" @bind-Value="@LessonData.Description" id="inputDescription" placeholder="Ajoutez une brève description"></InputTextArea>
+                        <ValidationMessage For="@(() => LessonData.Description)" />
+                    </div>
+                </div>
+
+
+                <div>
+                    <eLearn360.UI.Components.CkeditorComponent.CkeditorComponent EditorHeight="600px" EditorWidth="100%" @bind-EditorValue="@LessonData.Content"></eLearn360.UI.Components.CkeditorComponent.CkeditorComponent>
+                    <ValidationMessage For="@(() => LessonData.Content)" />
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-global mt-5">Enregistrer</button>
+                </div>
+                <DataAnnotationsValidator />
+            </EditForm>
+        </div>
+    }
+</div>

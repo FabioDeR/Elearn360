@@ -1,0 +1,76 @@
+﻿@page "/organizepath/{PathWayId:guid}/{Role}"
+@using eLearn360.UI.Components
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Roles = "Admin, Professor")]
+<PageTitle>Parcours</PageTitle>
+
+<div class="container my-5">
+
+    <h5 class="col title">Organiser l'ordre des cours</h5>
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        ﻿
+        <EditForm Model="@PathWayHasCourses" OnValidSubmit="@UpdatePosition">
+            <table class="table table-hover my-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Aperçu</th>
+                        <th scope="col" class="text-end">Ordre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (PathWayHasCourses.Count == 0)
+                    {
+                        <tr>
+                            <td class="fst-italic text-center">Pas de cours disponible.</td>
+                            <td></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in PathWayHasCourses)
+                        {
+                            <tr>
+                                <td class="fw-bold">@item.Course.Name</td>
+                                <td>@item.Course.Description</td>
+                                <td><a href="courseoverview/@item.Course.Id/@PathWayId/@histoNav" class="btn btn-global" title="Voir le cours"><span class="oi oi-eye"></span></a></td>
+                                <td class="d-flex justify-content-end">
+                                    <InputNumber @bind-Value="@item.Position" class="form-control" id="selectPosition" min="1" max="@Counter">
+                                        @item.Position
+                                    </InputNumber>
+                                    <button type="button" class="btn btn-danger ms-2" @onclick="()=>OpenDeleteDialog(item.Id)"><span class="oi oi-minus" aria-hidden="true"></span></button>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between mb-4">
+                <a href="@(Role == "Admin" ? "pathlistoverview" : "pathlistoverviewteacher")" class="btn btn-global-outline">Retour</a>
+                <button type="submit" class="btn btn-global">Enregistrer</button>
+            </div>
+
+        </EditForm>
+    }
+
+</div>
+
+
+@if (DeleteDialogOpen)
+{
+    <ModalDialog Title="Confirmation"
+             Text="Êtes-vous sûr de vouloir supprimer ce cours ?"
+             OnClose="@OnDeleteDialogClose"
+             DialogType="ModalDialog.ModalDialogType.YesCancel">
+    </ModalDialog>
+}

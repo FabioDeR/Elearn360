@@ -1,0 +1,15 @@
+﻿@page "/"
+@using eLearn360.UI.Shared.Component
+
+<PageTitle>Acceuil</PageTitle>
+@if (_isLoading)
+{
+    <Loader />
+}
+else
+{
+    <div class="d-flex justify-content-center align-items-center flex-column" style="height: calc(100vh - 88px);">
+        <img src="@OrgaImg" height="240" alt="Image de l'organisme @OrgaName" class="mb-3">
+    </div>
+}
+

@@ -1,0 +1,122 @@
+﻿@using eLearn360.Data.VM.Policies
+@using eLearn360.UI.Shared.Component
+
+@if (_isLoading)
+{
+    @*<Loader />*@
+}
+else
+{
+
+    <div class="bg-dark fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark container py-0 my-2 my-lg-0">
+
+            <div class="d-flex justify-content-between mobile-menu">
+                @*LOGO ELEARN*@
+                <a class="mb-0 text-decoration-none font-cabin" style="color: #01BAFF; font-size: 24px;" href="#">
+                    e<span class="text-white fs-3 fw-bold">Learn</span><span style="font-size:18px">360</span>
+                </a>
+
+                @*ORGANIZATION*@
+                <AuthorizeView Context="authContext">
+                    <EditForm Context="formContext" Model="@RefreshTokenVM">
+                        <InputSelect ValueChanged="@((string value) => OrgnizationSelected(value))" Value="@OrganizationIdChoise" ValueExpression="@(() => OrganizationIdChoise)" class="form-select select-nav mx-0 mx-sm-4" id="orgnizationSelect">
+                            @foreach (var organization in OrganizationList)
+                            {
+                                <option value="@organization.Id">@organization.Name</option>
+                            }
+                        </InputSelect>
+                    </EditForm>
+
+                </AuthorizeView>
+
+                @*HAMBURGER BUTTON*@
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+
+
+            <div class="collapse navbar-collapse align-items-center my-1 my-md-0" id="navbarToggleExternalContent">
+                <ul class="navbar-nav mt-2 mt-lg-0 mx-auto">
+
+                    @*NAVBAR SUPER-ADMIN ITEMS*@
+                <AuthorizeView Policy="@Policies.IsSuperAdmin">
+                        <li class="nav-item dropdown">
+                            <NavLink class="nav-link fw-bold dropdown-toggle py-3 ps-2 px-lg-2 px-xl-3 px-xxl-6 text-uppercase" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Super-Admin
+                            </NavLink>
+                            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                                <NavLink class="dropdown-item" href="organizationlistoverview">Liste des organismes</NavLink>
+                                <NavLink class="dropdown-item" href="organizationadd">Créer un organisme</NavLink>
+                                @*                            <div class="dropdown-divider my-0"></div>*@
+                            </div>
+                        </li>
+                    </AuthorizeView>
+
+                    @*NAVBAR ADMIN ITEMS*@
+                    <AuthorizeView Policy="@Policies.IsAdmin">
+                        <li class="nav-item dropdown">
+                            <NavLink class="nav-link fw-bold dropdown-toggle py-3 ps-2 px-lg-2 px-xl-3 px-xxl-6 text-uppercase" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </NavLink>
+                            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                                <NavLink class="dropdown-item" href="organizationoverview">Mon organisme</NavLink>
+                                <div class="dropdown-divider my-0"></div>
+                                <a class="dropdown-item" href="userorganizationlistoverview/@OrgaId">Liste des utilisateurs</a>
+                                <a class="dropdown-item" href="userorganizationadd/@OrgaId">Ajouter un utilisateur</a>
+                                <div class="dropdown-divider my-0"></div>
+                                <NavLink class="dropdown-item" href="grouplistoverview">Liste des groupes</NavLink>
+                                <a class="dropdown-item" href="groupadd/@OrgaId">Créer un groupe</a>
+                                <div class="dropdown-divider my-0"></div>
+                                <NavLink class="dropdown-item" href="pathlistoverview">Liste des parcours</NavLink>
+                                <NavLink class="dropdown-item" href="pathedit">Créer un parcours</NavLink>
+                            </div>
+                        </li>
+                    </AuthorizeView>
+
+                    @*NAVBAR TRAINER ITEMS*@
+                   
+                        <li class="nav-item dropdown">
+                            <NavLink class="nav-link fw-bold dropdown-toggle py-3 ps-2 px-lg-2 px-xl-3 px-xxl-6 text-uppercase" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Formateur
+                            </NavLink>
+                            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider my-0"></div>
+                                <NavLink class="dropdown-item" href="lessonlistoverview">Leçons</NavLink>
+                                <NavLink class="dropdown-item" href="sectionlistoverview">Sections</NavLink>
+                                <NavLink class="dropdown-item" href="courselistoverview">Cours</NavLink>
+                                <NavLink class="dropdown-item" href="pathlistoverviewteacher">Parcours</NavLink>
+                                <div class="dropdown-divider my-0"></div>
+                                <NavLink class="dropdown-item" href="mygrouplistoverview">Liste des groupes</NavLink>
+                            </div>
+                        </li>
+                                 
+
+                    @*NAVBAR STUDENT ITEMS*@
+                    <AuthorizeView Policy="@Policies.IsStudent">
+                        <li class="nav-item dropdown">
+                            <NavLink class="nav-link fw-bold dropdown-toggle py-3 ps-2 px-lg-2 px-xl-3 px-xxl-6 text-uppercase" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Cours en ligne
+                            </NavLink>
+                            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                                <NavLink class="dropdown-item" href="studentdashboard">Mes parcours</NavLink>
+                            </div>
+                        </li>
+                    </AuthorizeView>
+
+
+                    @*NAVBAR PARENT ITEMS*@
+                    <AuthorizeView Policy="@Policies.IsTutor">
+                        <li class="nav-item dropdown">
+                            <NavLink class="nav-link fw-bold dropdown-toggle py-3 ps-2 px-lg-2 px-xl-3 px-xxl-6 text-uppercase" href="#">
+                                Mes enfants
+                            </NavLink>
+                        </li>
+                    </AuthorizeView>
+                </ul>             
+            </div>
+        </nav>
+    </div>
+}

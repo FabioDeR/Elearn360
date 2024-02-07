@@ -1,0 +1,100 @@
+﻿@page "/myprofileedit/{UserId:guid}"
+@using eLearn360.UI.Shared.Component
+
+<div class="container py-4">
+    <h5 class="col title">Modification</h5>
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <EditForm Model="Item" OnValidSubmit="@HandleValidRequest">
+            <div class="row g-4 mt-0 mt-md-2 mb-3">
+                <div class="col-12 col-md-3">
+                    <div class="col-md-12">
+                        <label class="form-label">Image</label>
+                        <InputFile id="inputImage" class="sr-only" OnChange="ChoosePicture" accept="image/jpeg,image/x-png" />
+                        @if (ImgUrl != null)
+                        {
+                            <div>
+                                <img src="@ImgUrl" class="border shadow-sm edit-image" />
+                            </div>
+                        }
+                        <label class="link-text fw-500 mt-1 cursor-pointer" for="inputImage">Modifier l'image</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-9">
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label for="inputFirstname" class="form-label">Prénom</label>
+                            <InputText type="text" @bind-Value="@Item.FirstName" class="form-control" id="inputFirstname" />
+                            <ValidationMessage For="@(() => Item.FirstName)" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputName" class="form-label">Nom</label>
+                            <InputText type="text" @bind-Value="@Item.LastName" class="form-control" id="inputName" />
+                            <ValidationMessage For="@(() => Item.LastName)" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inputGender" class="form-label">Genre</label>
+                            <select @onchange="GenderSelect" class="form-select @_genderFormValidClass" id="inputGender">
+                                <option value="0" disabled selected>--Selectionnez un genre--</option>
+                                @foreach (var genderitem in GenderList)
+                                {
+                                    <option value="@genderitem.Id">@genderitem.Name</option>
+                                }
+                            </select>
+                            @if (_genderFormError)
+                            {
+                                <div class="validation-message">Veuillez selectionner un genre</div>
+                            }
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="inputDate" class="form-label">Date de naissance</label>
+                            <InputDate @bind-Value="@Item.Birthday" class="form-control" id="inputDate" />
+                            <ValidationMessage For="@(() => Item.Birthday)" />
+                        </div>
+
+                        <div class="col-12">
+                            <label for="inputAddress" class="form-label">Adresse</label>
+                            <InputText class="form-control" @bind-Value="@Item.Address" id="inputAddress" />
+                            <ValidationMessage For="@(() => Item.Address)" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputZip" class="form-label">Code postal</label>
+                            <InputText class="form-control" @bind-Value="@Item.ZipCode" id="inputZip" />
+                            <ValidationMessage For="@(() => Item.ZipCode)" />
+                        </div>
+                        <div class="col-md-8">
+                            <label for="inputCity" class="form-label">Ville</label>
+                            <InputText class="form-control" @bind-Value="@Item.City" id="inputCity"></InputText>
+                            <ValidationMessage For="@(() => Item.City)" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputCountry" class="form-label">Pays</label>
+                            <InputText class="form-control" @bind-Value="@Item.Country" id="inputCountry" />
+                            <ValidationMessage For="@(() => Item.Country)" />
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="inputPhone" class="form-label">Téléphone</label>
+                            <InputText class="form-control" @bind-Value="@Item.Phone" id="inputPhone" placeholder="+32..."></InputText>
+                            <ValidationMessage For="@(() => Item.Phone)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <a href="/myprofileoverview" class="btn btn-global-outline">Retour</a>
+                    <button type="submit" class="btn btn-global">Enregistrer</button>
+                </div>
+
+            </div>
+
+
+            <DataAnnotationsValidator />
+        </EditForm>
+    }
+</div>

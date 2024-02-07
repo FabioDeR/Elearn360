@@ -1,0 +1,54 @@
+﻿@using eLearn360.UI.Shared.Component
+
+<h3 class="title">Organiser votre nouveau cours</h3>
+
+@if (_isLoading)
+{
+    <Loader />
+}
+else
+{
+    <EditForm Model="@CourseHasSections" OnValidSubmit="@UpdatePosition">
+
+        <table class="table mt-4 mb-5">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Description</th>
+                    <th scope="col" class="col-1">Ordre</th>
+                    <th scope="col" class="col-1 text-end">Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in CourseHasSections)
+                {
+                    <tr>
+                        <td class="fw-bold">@item.Section.Name</td>
+                        <td>@item.Section.Description</td>
+                        <td>
+                            <InputNumber @bind-Value="@item.Position" class="form-control" id="selectPosition" min="1" max="@Counter">
+                                @item.Position
+                            </InputNumber>
+                        </td>
+                        <td class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-danger" @onclick="()=> OpenDeleteDialog(item.Id)"><span class="oi oi-minus" aria-hidden="true"></span></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-global">Terminer</button>
+        </div>
+
+    </EditForm>
+}
+@if (DeleteDialogOpen)
+{
+    <ModalDialog Title="Confirmation"
+             Text="Êtes-vous sûr de vouloir supprimer cette section ?"
+             OnClose="@OnDeleteDialogClose"
+             DialogType="ModalDialog.ModalDialogType.YesCancel">
+    </ModalDialog>
+}

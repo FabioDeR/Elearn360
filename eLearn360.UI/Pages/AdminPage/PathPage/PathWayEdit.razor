@@ -1,0 +1,101 @@
+﻿@page "/pathedit"
+@page "/pathedit/{id:guid}"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="p-4 border shadow">
+
+            <h3 class="title mb-4">Créer votre parcours</h3>
+
+            <EditForm Model="@PathData" OnValidSubmit="@HandleValidRequest">
+                <div class="form-group">
+                    <div class="row mb-3">
+                        <div class="col-12 col-md-8">
+                            <label for="inputName" class="col-form-label">Nom du parcours</label>
+                            <div>
+                                <InputText class="form-control" @bind-Value="@PathData.Name" id="inputName" placeholder="Nom du parcours"></InputText>
+                                <ValidationMessage For="@(() => PathData.Name)" />
+                            </div>
+                        </div>
+                        <div class="col-md-2 offset-2">
+                            <label for="inputIsPrivate" class="col-form-label text-left px-0 labelPrivate">@(PathData.PrivatePath ? "Parcours Privée" : "Parcours Public")</label>
+                            <div>
+                                <label for="myToggle" class="toggle">
+                                    <InputCheckbox class="toggle__input d-none" name="" id="myToggle" @bind-Value="@PathData.PrivatePath" />
+                                    <div class="toggle__fill"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label for="inputDescription" class="col-form-label">Description</label>
+                    <div class="col mb-3">
+                        <InputTextArea class="form-control" @bind-Value="@PathData.Description" id="inputDescription" placeholder="Ajoutez une brève description"></InputTextArea>
+                        <ValidationMessage For="@(() => PathData.Description)" />
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-4">
+                            <label for="inputLevel" class="col-form-label">Niveau</label>
+                            <div>
+                                <InputSelect class="form-control" @bind-Value="@PathData.LevelId" id="inputLevel">
+                                    <option selected value="0" disabled>----</option>
+                                    @foreach (var lev in LevelList)
+                                    {
+                                        <option value="@lev.Id">@lev.Name</option>
+                                    }
+                                </InputSelect>
+                                <ValidationMessage For="@(() => PathData.LevelId)" />
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <label for="inputCategory" class="col-form-label">Catégorie</label>
+                            <div>
+                                <InputSelect class="form-select" @bind-Value="@PathData.CategoryId" id="inputCategory">
+                                    <option selected value="0" disabled>----</option>
+                                    @foreach (var cat in CategoryList)
+                                    {
+                                        <option value="@cat.Id">@cat.Name</option>
+                                    }
+                                </InputSelect>
+                                <ValidationMessage For="@(() => PathData.CategoryId)" />
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <label for="inputImage" class="col-form-label">Image</label>
+                            <div>
+                                <InputFile id="inputImage" class="form-control custom-file" OnChange="@HandleSelected" accept="image/jpeg,image/x-png" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div>
+                    <eLearn360.UI.Components.CkeditorComponent.CkeditorComponent @bind-EditorValue="@PathData.Content" EditorHeight="600px" EditorWidth="100%"></eLearn360.UI.Components.CkeditorComponent.CkeditorComponent>
+                    <ValidationMessage For="@(() => PathData.Content)" />
+                </div>
+
+                <div class="d-flex justify-content-between my-4">
+                    <a href="pathlistoverview" class="btn btn-global-outline"><i class="bi bi-caret-left-fill me-2"></i>Liste des parcours</a>
+                    <button type="submit" class="btn btn-global">Relier ce parcours à un groupe</button>
+                </div>
+
+                <DataAnnotationsValidator />
+            </EditForm>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,60 @@
+﻿@page "/studentgroupadd/{GroupId:guid}"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+
+
+        <h5 class="col title">Ajouter un étudiant : @groupName</h5>
+
+        <table class="table table-hover my-5">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Date de naissance</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col" class="text-end">Ajouter</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (UserList.Count > 0)
+                {
+                    @foreach (var User in UserList)
+                    {
+                        <tr>
+                            <td class="fw-bold">@User.LastName @User.FirstName</td>
+                            <td>@User.Birthday.ToString("dd/MM/yyyy")</td>
+                            <td>@User.LoginMail</td>
+                            <td>@User.Phone</td>
+                            <td class="text-end">
+                                <button type="button" @onclick="() => AddStudent(User.Id)" class="btn btn-global"><span class="oi oi-plus" aria-hidden="true"></span></button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>Vos utilisateurs sont déjà tous présents dans : "@groupName"</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+        <a href="usergrouplistoverview/@GroupId" class="btn btn-global-outline mb-4">Retour</a>
+    }
+</div>

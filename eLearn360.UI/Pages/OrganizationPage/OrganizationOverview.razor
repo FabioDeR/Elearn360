@@ -1,0 +1,42 @@
+﻿@page "/organizationoverview"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Roles = "Admin, SuperAdmin")]
+@if (Organization != null)
+{
+    <PageTitle>Organisme</PageTitle>
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="container my-5">
+            <div class="d-flex justify-content-center mb-5">
+                <img src="@Organization.ImageUrl" style="max-height:220px" />
+            </div>
+
+            <div class="row col-sm-8 offset-sm-2">
+
+                <div class="col-12 col-sm-8">
+                    <h5 class="title mb-4">@Organization.Name</h5>
+                    <p class="mb-0">@Organization.Address</p>
+                    <p class="mb-0">@Organization.ZipCode @Organization.City</p>
+                    <p>@Organization.Country</p>
+                    <p>@Organization.Phone</p>
+                    <a class="link-text" href="@Organization.Website">@Organization.Website</a>
+
+                </div>
+
+                <div class="col-12 col-sm-4 mt-5">
+
+                    <a class="link-text d-block mb-3" href="organizationedit/@Organization.Id"><span class="oi oi-pencil me-3" />Modifier</a>
+                    <a class="link-text d-block mb-3" href="userorganizationlistoverview/@Organization.Id"><span class="oi oi-person me-3" />Voir les utilisateurs</a>
+                    <a class="link-text d-block mb-3" href="grouplistoverview"><span class="oi oi-people me-3" />Groupes</a>
+                </div>
+            </div>
+        </div>
+    }
+
+}

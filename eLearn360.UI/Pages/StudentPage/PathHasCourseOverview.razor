@@ -1,0 +1,72 @@
+﻿@page "/pathhascourseoverview/{PathId:guid}"
+@using eLearn360.UI.Shared.Component
+@attribute [Authorize(Roles = "Student")]
+
+<div class="my-5">
+    <div class="container">
+        @if (_isLoading)
+        {
+            <Loader />
+        }
+        else
+        {
+            <div class="row mb-4">
+                <div class="col-12 col-sm-9 mb-4 mb-sm-0">
+                    <h3 class="title mb-0">@PathWay.Name</h3>
+                </div>
+                <div class="col-12 col-sm-3 text-end">
+                    <button type="button" class="btn btn-global" @onclick="GoToQuizz"><i class="fa fa-trophy me-2" aria-hidden="true"></i>Tester mes compétences</button>
+                </div>
+            </div>
+
+            <div class="py-4 px-4 border rounded shadow-sm">
+                <div class="row">
+                    <div class="col-1 align-self-center px-0">
+                        <div class="col px-0">
+                            <img src="@PathWay.ImageUrl" class="w-100" />
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <h5>@PathWay.Description</h5>
+                        <div>@((MarkupString)PathWay.Content)</div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Courses.Count == 0)
+            {
+                <h4 class="row mt-4 font-italic">Aucun parcours dans vos groupes</h4>
+            }
+            else
+            {
+                <div class="row my-4">
+                    @foreach (var course in Courses)
+                    {
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="card shadow">
+                                <img src="@course.ImageUrl" class="card-img-top" alt="course-image">
+                                @if (course.HistoricCourseHasUsers != null)
+                                {
+                                    @foreach (var historic in course.HistoricCourseHasUsers)
+                                    {
+                                        if (historic.StartDate != null && historic.EndDate != null)
+                                        {
+                                            <img src="/image/checked.png" class="icon-check" alt="checked-icon" />
+                                        }
+                                    }
+                                }
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate">
+                                        @course.Name
+                                    </h5>
+                                    <p class="card-text clamp-6">@course.Description</p>
+                                    <button @onclick="() => PostStartHistoric(PathId, course.Id)" class="btn btn-global d-flex justify-content-center">Suivre ce cours</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>

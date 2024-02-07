@@ -1,0 +1,78 @@
+﻿@page "/linkpathtogroup/{PathWayId:guid}"
+@using eLearn360.UI.Components.Modal
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+<PageTitle>Parcours</PageTitle>
+
+<div class="container my-5">
+
+    <h5 class="col title mb-4">Lier le parcours "@PathWay.Name" à un groupe</h5>
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="alert alert-danger mb-4 @(ListGroupId.Count == 0 ? "d-block" : "d-none")" role="alert"><i class="bi bi-exclamation-triangle me-2"></i>Si vous ne liez pas ce parcours à un groupe, celui-ci ne pourra être vu par les administrateurs de votre organisme.</div>
+
+        <table class="table mb-5">
+            <thead>
+                <tr>
+                    <th scope="col">Nom du groupe</th>
+                    <th scope="col" class="text-end">Ajouter / Retirer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (GroupList.Count == 0)
+                {
+                    <tr>
+                        <td class="fst-italic text-center">Vous n'avez pas encore créé de classe ou de groupe</td>
+                        <td></td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in GroupList)
+                    {
+                        <tr>
+                            <td class="fw-bold">@item.Name</td>
+                            <td class="text-end">
+
+                                @if (ListGroupId.Contains(item.Id))
+                                {
+                                    <button class="btn btn-outline-danger" @onclick="() =>DeleteGroup(item.Id)"><span class="oi oi-minus" aria-hidden="true"></span></button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-global-outline" @onclick="() =>AddGroup(item.Id)"><span class="oi oi-plus" aria-hidden="true"></span></button>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        @if (ListGroupId.Count == 0)
+        {
+            <button class="btn btn-global-outline mb-4" @onclick="() => OpenAcceptDialog()">Retour à la liste</button>
+        }
+        else
+        {
+            <a href="pathlistoverview" class="btn btn-global-outline mb-4">Retour à la liste</a>
+        }
+
+    }
+</div>
+
+@if (AcceptDialogOpen)
+{
+    <ModalDialog Title="Attention"
+             Text="Êtes-vous sûr de vouloir quitter la page sans lier le parcours à un groupe ? Celui-ci ne pourra être vu par la suite !"
+             OnClose="OnAcceptDialogClose"
+             DialogType="ModalDialog.ModalDialogType.YesCancel">
+    </ModalDialog>
+}

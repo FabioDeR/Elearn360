@@ -1,0 +1,67 @@
+﻿@page "/reportcourseoverview/{UserId:guid}/{GroupId:guid}/{Role}"
+@using eLearn360.UI.Shared.Component
+@attribute [Authorize(Roles = "Student, Professor, Admin")]
+
+
+<div class="container my-5">
+
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <span class="col title">Rapport / Historique de @LessonReportVM.Name </span>
+
+        <div class="mb-5">
+
+            @foreach (var path in LessonReportVM.ReportPaths)
+            {
+                <div class="border-bottom mt-5 mb-3 pb-3">
+
+                    <h5 class="fw-bold">
+                        @path.PathVM.Name
+                        <span>
+                            @*<progress class="ml-4 me-2" id="progress" max="100" value="@(path.PercentComplete)" style="vertical-align: middle"></progress>*@
+                            @*<span class="text-muted text h6">@path.PercentComplete %</span>*@
+                            <span class="@(path.PathSeen ? "text-success" : "invisible") ml-2 oi oi-circle-check"></span>
+                        </span>
+                    </h5>
+                </div>
+
+                @foreach (var course in path.ReportCourses)
+                {
+
+                    <h6 class="fw-bold">
+                        @course.CourseVM.Name
+                        <span>
+                            @*<progress class="ms-4 me-2" id="progress" max="100" value="@(course.PercentComplete)" style="vertical-align: middle"></progress>*@
+                            @*<span class="text-muted text h6">@course.PercentComplete %</span>*@
+                            <span class="@(course.CourseSeen ? "text-success" : "invisible") ms-2 oi oi-circle-check"></span>
+                        </span>
+                    </h6>
+
+                    foreach (var sectionItem in course.ReportSections)
+                    {
+                        <p class="ms-3 fw-bolder">
+                            <span class="@(sectionItem.SectionSeen ? "text-success" : "invisible") ms-2 oi oi-circle-check"></span>
+                            @sectionItem.SectionVM.Name
+                        </p>
+
+                        foreach (var lesson in sectionItem.RapportLessons)
+                        {
+                            <p class="ms-5">
+                                <span class="@(lesson.LessonSeen ? "text-success" : "invisible") ms-2 oi oi-circle-check"></span>
+                                @lesson.LessonVM.Name
+                            </p>
+                        }
+                    }
+                }
+         }
+        </div>
+    }
+
+    <button @onclick="CheckRole" class="btn btn-global-outline mb-4">Retour</button>
+
+</div>

@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+		
+	
+  <ItemGroup>
+    <ProjectReference Include="..\eLearn360.Data\eLearn360.Data.csproj" />
+    <ProjectReference Include="..\eLearn360.Utils\eLearn360.Utils.csproj" />
+	  <Using Include="eLearn360.Data.Models" />
+	  <Using Include="eLearn360.Data.DBContext" />
+	  <Using Include="eLearn360.Repository.Interfaces" />
+  </ItemGroup>
+
+</Project>

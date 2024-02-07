@@ -1,0 +1,76 @@
+﻿@page "/courseoverview/{CourseId:guid}/{HistoNav}"
+@page "/courseoverview/{CourseId:guid}/{PathWayId:guid}/{HistoNav}"
+@using eLearn360.UI.Shared.Component
+@attribute [Authorize(Roles = "Admin, Professor")]
+
+@if (_isLoading)
+{
+    <Loader />
+}
+else
+{
+    <div class="overflow-hidden wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="@CollapseMenu navContent">
+            <div class="sidebar-header py-4 px-3">
+                <h4 class="cursor-pointer @(actualItemId == CourseMenu.Id ? "selected-item" : "")" @onclick="() => SelectItem(CourseMenu.Id)">
+                    @CourseMenu.Name
+                </h4>
+            </div>
+
+            <ul class="list-unstyled components">
+                @foreach (var toto in CourseMenu.Sections)
+                {
+                    <li class="mb-3">
+                        <h5 class="side-title cursor-pointer py-1 ps-3 @(actualItemId == toto.Id ? "selected-item" : "")" @onclick="() => SelectItem(toto.Id)">
+                            @toto.Name
+                        </h5>
+
+                        <ul class="list-unstyled" id="dropDown">
+                            <li>
+                                @foreach (var lesson in toto.Lessons)
+                                {
+                                    <h6 class="side-title cursor-pointer py-1 ps-4 @(actualItemId == lesson.Id ? "selected-item" : "")" @onclick="() => SelectItem(lesson.Id)">
+                                        @lesson.Name
+                                    </h6>
+                                }
+                            </li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </nav>
+
+        <!-- Content -->
+        <div id="content" class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
+                <div class="d-flex align-items-center w-100 m-2">
+                    <div class="ms-3">
+                        <button type="button" id="sidebarCollapse" @onclick="ToggleNavMenu" class="btn btn-global">
+                            <i class="oi oi-align-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 text-center ps-n6">
+                        <h3 class="mb-0">@CourseMenu.Name</h3>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="px-4 pb-0 pt-4 courseContent">
+                <div class="d-flex flex-column justify-content-between h-100">
+                    <div>
+                        @((MarkupString)ViewContentVM.Content)
+                    </div>
+
+                    <div class="w-100 border-top py-3 mt-4">
+                        <button class="btn btn-global float-start @(currentPosition == 0 ? "visually-hidden" : "d-block")" @onclick="() => Previous(ViewContentVM.Id)">Précédent</button>
+                        <button class="btn btn-global float-end" @onclick="() => Next(ViewContentVM.Id)">@(currentPosition == GuidList.Count - 1 ? "Terminer" : "Suivant")</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

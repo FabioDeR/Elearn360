@@ -1,0 +1,65 @@
+﻿@page "/userorganizationlistoverview/{OrganizationId:guid}"
+@using eLearn360.Data.VM.Policies
+@using eLearn360.UI.Shared.Component
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+<PageTitle>Organisme</PageTitle>
+
+<div class="container my-5">
+
+    <div class="d-flex w-100 justify-content-between">
+        <h5 class="col title">Liste des utilisateurs : @Organization.Name</h5>
+        <a href="userorganizationadd/@(Organization.Id)" class="btn btn-global"><span class="oi oi-plus me-2" aria-hidden="true"></span>Ajouter un nouvel utilisateur</a>
+    </div>
+
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <table class="table table-hover my-5">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Date de naissance</th>
+                    <th scope="col">Ville</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Rôle</th>
+                    <th scope="col" class="text-end">Éditer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Organization.Users)
+                {
+                    <tr>
+                        <td class="fw-bold">@user.LastName @user.FirstName</td>
+                        <td>@user.Birthday.ToString("dd/MM/yyyy")</td>
+                        <td>@user.City</td>
+                        <td>@user.LoginMail</td>
+                        <td>@user.Phone</td>
+                        <td>
+                            @string.Join(", ", user.Occupations.Select(o => o.NormalizedName))
+                        </td>
+                        <td class="text-end">
+                            <a class="btn btn-global me-1" href="profileoverview/@user.Id/AdminOrga"><span class="oi oi-eye" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        
+
+        @*Super-Admin Redirect*@
+        <AuthorizeView Policy="@Policies.IsSuperAdmin">
+            <NavLink href="organizationlistoverview" class="btn btn-global-outline mb-4">Retour</NavLink>
+        </AuthorizeView>
+
+        @*Admin Redirect*@
+        <AuthorizeView Policy="@Policies.IsAdmin">
+            <NavLink href="organizationoverview" class="btn btn-global-outline mb-4"><i class="bi bi-caret-left-fill me-2"></i>Mon organisme</NavLink>
+        </AuthorizeView>
+    }
+</div>

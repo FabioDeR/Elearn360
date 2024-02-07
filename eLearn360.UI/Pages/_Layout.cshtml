@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@namespace eLearn360.UI.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="eLearn360.UI.styles.css" rel="stylesheet" />
+    @*Toast*@
+    <link href="_content/Sotsera.Blazor.Toaster/toastr.min.css" rel="stylesheet" />
+    <component type="typeof(HeadOutlet)" render-mode="Server" />
+</head>
+<body>
+    @RenderBody()
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+        @* ==== CKeditor JS ==== *@
+    <script src="~/js/ckeditor5-build-classic/ckeditor.js"></script>
+    <script src="~/js/ckeditor5-build-classic/NewCkeditor.js"></script>
+    <script src="~/js/ckeditor5-build-classic/translations/fr.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/4edcb0b1e4.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿@page "/studentlistoverview/{GroupId:guid}"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsProfessor)]
+
+<PageTitle>@StudentGroup.Name</PageTitle>
+
+<div class="container my-5">
+
+    <div class="d-flex">
+        <img src="@StudentGroup.ImageUrl" style="height:24px;margin-top: 2px;" />
+        <h5 class="col title ms-2">@StudentGroup.Name</h5>
+    </div>
+
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="d-flex mt-5 mb-3 justify-content-start">
+            <h5 class="align-self-center fw-bold">Étudiants</h5>
+        </div>
+        <table class="table table-hover mb-5">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Date de naissance</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col" class="text-end">Éditer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (StudentGroup.UserHasGroups.Count > 0)
+                {
+                    @foreach (var user in StudentGroup.UserHasGroups)
+                    {
+                        <tr>
+                            <td class="fw-bold">@user.User.LastName @user.User.FirstName</td>
+                            <td>@user.User.Birthday.ToString("dd/MM/yyyy")</td>
+                            <td>@user.User.LoginMail</td>
+                            <td>@user.User.Phone</td>
+                            <td class="text-end">
+                                <a class="btn btn-global me-1" title="Rapport et Historique" href="reportcourseoverview/@user.User.Id/@StudentGroup.Id/Teacher"><i class="bi bi-bar-chart-fill"></i></a>
+                                <a class="btn btn-global" title="Voir le profil" href="profileoverview/@user.User.Id/Teacher/@StudentGroup.Id"><span class="oi oi-eye" aria-hidden="true"></span></a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="fst-italic">Il n'y a pas encore d'étudiant dans cette classe.</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+
+        <NavLink href="mygrouplistoverview" class="btn btn-global-outline mb-4">Retour</NavLink>
+    }
+</div>

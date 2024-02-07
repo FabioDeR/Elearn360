@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eLearn360.Data", "eLearn360.Data\eLearn360.Data.csproj", "{F1120E66-7AC7-40A8-A5C5-282238BD7308}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eLearn360.Repository", "eLearn360.Repository\eLearn360.Repository.csproj", "{A504F9E5-F40D-4BBA-9076-D4ED8C569DCD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eLearn360.API", "eLearn360.API\eLearn360.API.csproj", "{E7E8B055-9EC0-4954-82B9-B2FC32856713}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eLearn360.UI", "eLearn360.UI\eLearn360.UI.csproj", "{3E201E46-35B2-40CC-BA35-3B891D2D4954}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eLearn360.Service", "eLearn360.Service\eLearn360.Service.csproj", "{FB50213F-2652-44E5-9647-876C340A93B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eLearn360.Utils", "eLearn360.Utils\eLearn360.Utils.csproj", "{E7390DBA-FA18-4DE3-A29C-941BDEFCC4E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1120E66-7AC7-40A8-A5C5-282238BD7308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1120E66-7AC7-40A8-A5C5-282238BD7308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1120E66-7AC7-40A8-A5C5-282238BD7308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1120E66-7AC7-40A8-A5C5-282238BD7308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A504F9E5-F40D-4BBA-9076-D4ED8C569DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A504F9E5-F40D-4BBA-9076-D4ED8C569DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A504F9E5-F40D-4BBA-9076-D4ED8C569DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A504F9E5-F40D-4BBA-9076-D4ED8C569DCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7E8B055-9EC0-4954-82B9-B2FC32856713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7E8B055-9EC0-4954-82B9-B2FC32856713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7E8B055-9EC0-4954-82B9-B2FC32856713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7E8B055-9EC0-4954-82B9-B2FC32856713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E201E46-35B2-40CC-BA35-3B891D2D4954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E201E46-35B2-40CC-BA35-3B891D2D4954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E201E46-35B2-40CC-BA35-3B891D2D4954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E201E46-35B2-40CC-BA35-3B891D2D4954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB50213F-2652-44E5-9647-876C340A93B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB50213F-2652-44E5-9647-876C340A93B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB50213F-2652-44E5-9647-876C340A93B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB50213F-2652-44E5-9647-876C340A93B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7390DBA-FA18-4DE3-A29C-941BDEFCC4E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7390DBA-FA18-4DE3-A29C-941BDEFCC4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7390DBA-FA18-4DE3-A29C-941BDEFCC4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7390DBA-FA18-4DE3-A29C-941BDEFCC4E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {585A914E-0B60-4D55-AB4E-D163F0412C2F}
+	EndGlobalSection
+EndGlobal

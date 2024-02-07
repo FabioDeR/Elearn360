@@ -1,0 +1,189 @@
+﻿@page "/student/quizzedit/{PathId}"
+@attribute [Authorize(Roles = "Student")]
+<div class="container my-5">
+
+    <h5 class="col title">Tester ses compétences</h5>
+
+    <EditForm Model="QuizzVM">
+
+        @if (FormIsVisible)
+        {
+            <div class="d-flex justify-content-lg-around my-5">
+                <div class="col">
+
+                    <div class="form-group row">
+
+                        <label for="inputSelectCourse" class="col-md-4 col-form-label text-end">Branche</label>
+                        <div class="col-md-4">
+                            <select class="form-control col-10" id="selectSelectCourse" @onchange="@OnSelectType">
+                                <option value="0" disabled selected>--Choisir une branche--</option>
+                                @foreach (var enumint in TypeEnum)
+                                {
+                                    <option value="@Convert.ToInt32(enumint)">@enumint.ToString()</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    @if (QuizzVM.TypeEnum != 0)
+                    {
+                        <div class="form-group row">
+                            <label for="inputSelectTask" class="col-md-4 col-form-label text-end">Matière</label>
+                            <div class="col-md-4">
+                                <InputSelect @bind-Value="QuizzVM.Idx" class="form-control col-10" id="selectIdx">
+                                    <option value="@Guid.Empty" selected disabled>--- Sélectionnez une matière ---</option>
+                                    @switch ((int)QuizzVM.TypeEnum)
+                                    {
+                                        case 1:
+                                    @foreach (var item in Lessons)
+                                            {
+                                        <option value="@item.Id">@item.Name</option>
+                                            }
+                                            break;
+
+                                        case 2:
+                                    @foreach (var item in Sections)
+                                            {
+                                        <option value="@item.Id">@item.Name</option>
+                                            }
+                                            break;
+
+                                        case 3:
+                                    @foreach (var item in Courses)
+                                            {
+                                        <option value="@item.Id">@item.Name</option>
+                                            }
+                                            break;
+
+                                        case 4:
+                                         @foreach (var item in PathWays)
+                                            {
+                                        <option value="@item.Id">@item.Name</option>
+                                            }
+                                            break;
+
+                                    }
+
+                        </InputSelect>
+                    </div>
+                </div>
+
+                        <div class="form-group row">
+                            <label for="inputSelectNumber" class="col-md-4 col-form-label text-end">Nombre de questions</label>
+                            <div class="col-md-4">
+                                <InputNumber @bind-Value="@QuizzVM.nbQuestion" class="form-control col-10" id="inputSelectNumber" min=2 max=50></InputNumber>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputSelectLevel" class="col-md-4 col-form-label text-end">Niveau</label>
+                            <div class="col-md-4">
+                                <InputSelect @bind-Value="@QuizzVM.LevelId" class="form-control col-10" id="inputSelectLevel">
+                                    <option value="@Guid.Empty" selected disabled>--- Sélectionnez un niveau ---</option>
+                                    @foreach (var item in Levels)
+                                    {
+                                <option value="@item.Id">@item.Name</option>
+                                    }
+                        </InputSelect>
+                    </div>
+                </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-4 offset-md-4">
+                                @if (QuizzVM.Idx != Guid.Empty && QuizzVM.LevelId != Guid.Empty)
+                                {
+                                    <button type="button" @onclick="() => GenerateQuizz()" class="btn btn-global mb-4 me-2">Lancer le quizz <span class="oi oi-play-circle ms-2"></span></button>
+                                }
+
+                            </div>
+                        </div>
+
+                        <p class="text-center text-danger">@Message</p>
+                    }
+
+                </div>
+            </div>
+        }
+
+        @if (!ScoreIsVisible)
+        {
+            @if (QuizzVM.QuestionVMs != null && QuizzVM.QuestionVMs.Count() > 0)
+            {
+                <div class="d-flex flex-column align-items-center my-5 p-3 border rounded">
+
+                    @foreach (var item in QuizzVM.QuestionVMs)
+                    {
+                        <h6 class="question-title font-weight mt-4">@item.Title</h6>
+                        <div class="question-content">@((MarkupString)item.Content)</div>
+
+                        @foreach (var answer in item.AnswerVMs)
+                        {
+                            <div class="custom-control custom-checkbox answer-card-container my-2">
+                                <InputCheckbox class="custom-control-input" id="@answer.AnswerId" @bind-Value="answer.IsSelected"></InputCheckbox>
+                                <label class="custom-control-label answer-card fw-normal" for="@answer.AnswerId">
+                                    @((MarkupString)answer.Content)
+                                </label>
+                            </div>
+                        }
+                    }
+
+                    <button type="button" class="btn btn-global d-inline-block my-4" @onclick="() => GetScore()">Envoyer les réponses</button>
+                </div>
+            }
+        }
+
+        @if (ScoreIsVisible && QuizzFinish)
+        {
+            <div class="d-flex flex-column align-items-center my-5">
+
+                @*<img src="/img/@(QuizzVM.Rating > 99.9 ? "trophy" : "medal").png" class="scale-up-center" />*@
+
+                @if (QuizzVM.Rating > 99.9)
+                {
+                    <p class="text-center my-3 h2 font-weight-bold">Bravo !</p>
+                }
+
+                <p class="text-center my-4 h3">Résultat : <span class="@ScoreClassColor font-weight-bold">@QuizzVM.Rating%</span></p>
+
+                @if (QuizzVM.BadAnswerVMs.Count > 0 || QuizzVM.BadAnswerVMs != null)
+                {
+                    @foreach (var badAnswers in QuizzVM.BadAnswerVMs)
+                    {
+                        <div class="question-content">@((MarkupString)badAnswers.Question)</div>
+                        <span>Votre réponse : </span>
+                        @foreach (var studentanswer in badAnswers.StudentAnswer)
+                        {
+                            <div class="answer-card-result my-2">
+                                @((MarkupString)studentanswer)
+                            </div>
+                        }
+                        <span>Réponse(s) attendue(s) : </span>
+                        @foreach (var goodAnswer in badAnswers.GoodAnswer)
+                        {
+                            <div class="answer-card-result my-2">
+                                @((MarkupString)goodAnswer)
+                            </div>
+                        }
+
+                        @if (badAnswers.Explaination != null)
+                        {
+                            <div class="question-content border rounded m-0 d-flex">
+                                <div class="align-self-center px-3"><i class="fa fa-info-circle text-primary h2"></i></div>
+                                <div class="explanation-content">@((MarkupString)badAnswers.Explaination)</div>
+                            </div>
+                        }
+                    }
+                }
+
+                <div class="d-flex my-4">
+                    <button type="button" class="btn btn-global me-2" @onclick="ReloadQuizz"><span class="oi oi-reload me-2"></span>Refaire un quizz</button>
+                    <button type="button" class="btn btn-global-outline ms-2" @onclick="Cancel">Retour</button>
+                </div>
+            </div>
+        }
+
+    </EditForm>
+
+
+</div>
+

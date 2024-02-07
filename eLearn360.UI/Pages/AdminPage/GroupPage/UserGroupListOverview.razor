@@ -1,0 +1,120 @@
+﻿@page "/usergrouplistoverview/{GroupId:guid}"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+<PageTitle>@StudentGroup.Name</PageTitle>
+
+<div class="container my-5">
+
+    <div class="d-flex">
+        <img src="@StudentGroup.ImageUrl" style="height:24px;margin-top: 2px;" />
+        <h5 class="col title ms-2">@StudentGroup.Name</h5>
+    </div>
+
+
+    @if (_loading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="d-flex mt-5 mb-3 justify-content-between">
+            <h5 class="align-self-center fw-bold">Étudiants</h5>
+            <a href="studentgroupadd/@(StudentGroup.Id)" class="btn btn-global"><span class="oi oi-plus me-2" aria-hidden="true"></span>Ajouter un étudiant</a>
+        </div>
+        <table class="table table-hover mb-5">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Date de naissance</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col" class="text-end">Éditer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (StudentGroup.UserHasGroups.Count > 0)
+                {
+                    @foreach (var user in StudentGroup.UserHasGroups)
+                    {
+                        <tr>
+                            <td class="fw-bold">@user.User.LastName @user.User.FirstName</td>
+                            <td>@user.User.Birthday.ToString("dd/MM/yyyy")</td>
+                            <td>@user.User.LoginMail</td>
+                            <td>@user.User.Phone</td>
+                            <td class="text-end">
+                                <a class="btn btn-global me-1" title="Rapport et Historique" href="reportcourseoverview/@user.User.Id/@StudentGroup.Id/Admin"><i class="bi bi-bar-chart-fill"></i></a>
+                                <a class="btn btn-global me-2" title="Voir le profil" href="profileoverview/@user.User.Id/AdminGroup/@StudentGroup.Id"><span class="oi oi-eye" aria-hidden="true"></span></a>
+                                <button type="button" title="Supprimer" class="btn btn-danger me-1" @onclick="() => RemoveUser(user.User.Id)"><span class="oi oi-minus" aria-hidden="true"></span></button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="fst-italic">Vous n'avez pas encore d'étudiants.</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+
+
+        <div class="d-flex pt-5 mt-5 mb-3 justify-content-between">
+            <h5 class="align-self-center fw-bold">Formateurs</h5>
+            <a href="teachergroupadd/@(TeacherGroup.Id)" class="btn btn-global"><span class="oi oi-plus me-2" aria-hidden="true"></span>Ajouter un formateur</a>
+        </div>
+        <table class="table table-hover mb-5">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Occupation(s)</th>
+                    <th scope="col" class="text-center">Titulaire</th>
+                    <th scope="col" class="text-end">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (TeacherGroup.UserHasGroups.Count > 0)
+                {
+                    @foreach (var user in TeacherGroup.UserHasGroups.OrderByDescending(x => x.IsHeadTeacher))
+                    {
+                        <tr>
+                            <td class="fw-bold">@user.User.LastName @user.User.FirstName</td>
+                            <td>@string.Join(", ", user.StaffOccupations.Select(o => o.Name))</td>
+                            <td class="text-center text-success fw-bold fs-4">
+                                @(user.IsHeadTeacher ? "✓" : "")
+                            </td>
+                            <td class="text-end">
+                                <a class="btn btn-global me-2" title="Voir le profil" href="profileoverview/@user.User.Id/AdminGroup/@StudentGroup.Id"><span class="oi oi-eye" aria-hidden="true"></span></a>
+                                <button type="button" title="Supprimer" class="btn btn-danger" @onclick="() => RemoveUser(user.User.Id)"><span class="oi oi-minus" aria-hidden="true"></span></button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="fst-italic">Vous n'avez pas encore de formateurs.</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+
+        <NavLink href="grouplistoverview" class="btn btn-global-outline mb-4">Retour</NavLink>
+    }
+</div>

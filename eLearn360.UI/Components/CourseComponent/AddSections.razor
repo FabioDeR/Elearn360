@@ -1,0 +1,64 @@
+﻿@using eLearn360.UI.Shared.Component
+
+<h3 class="title">Ajouter une ou plusieurs sections au cours</h3>
+
+@if (_isLoading)
+{
+    <Loader />
+}
+else
+{
+    <h5 class="mt-4 mb-3 font-weight-bold">Sections privées</h5>
+    <table class="table mb-0">
+        <tbody>
+            @foreach (var item in PrivateSections)
+            {
+                @if (item.Name != null)
+                {
+                    <tr>
+                        <td class="fw-bold">@item.Name</td>
+                        <td>@item.Description</td>
+                        <td class="d-flex justify-content-end">
+                            @if (ListSectionId.Contains(item.Id))
+                            {
+                                <button class="btn btn-outline-danger" @onclick="() =>DeleteSection(item.Id)"><span class="oi oi-minus" aria-hidden="true"></span></button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-global" @onclick="() =>AddSection(item.Id)"><span class="oi oi-plus" aria-hidden="true"></span></button>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    @if (PublicSections.Count > 0)
+    {
+        <h5 class="mt-4 mb-3 font-weight-bold">Sections publiques</h5>
+        <table class="table mb-0">
+            <tbody>
+                @foreach (var item in PublicSections)
+                {
+                    <tr>
+                        <td class="fw-bold">@item.Name</td>
+                        <td>@item.Description</td>
+                        <td class="d-flex justify-content-end">
+
+                            @if (ListSectionId.Contains(item.Id))
+                            {
+                                <button class="btn btn-outline-danger" @onclick="() =>DeleteSection(item.Id)"><span class="oi oi-plus" aria-hidden="true"></span></button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-global" @onclick="() =>AddSection(item.Id)"><span class="oi oi-plus" aria-hidden="true"></span></button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

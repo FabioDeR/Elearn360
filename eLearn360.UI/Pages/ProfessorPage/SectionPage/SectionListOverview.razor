@@ -1,0 +1,84 @@
+﻿@page "/sectionlistoverview"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsProfessor)]
+<PageTitle>Section</PageTitle>
+
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="mt-5 mb-4 d-flex justify-content-between">
+            <h5 class="mb-0 align-self-end title">Sections privées</h5>
+            <a class="btn btn-global" href="sectionedit"><span class="oi oi-plus me-2"></span>Créer une section</a>
+        </div>
+        @if (PrivateSection.Count == 0)
+        {
+            <p class="fst-italic text-muted">Vous n'avez pas encore créé de section</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Description</th>
+                        <th scope="col" class="text-end">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in PrivateSection)
+                    {
+                        <tr>
+                            <td class="fw-bold">@item.Name</td>
+                            <td>@item.Description</td>
+                            <td class="d-flex align-items-center justify-content-end">
+                                @*<a class="btn btn-global me-1" title="Voir" href="sectionoverview/@item.Id"><span class="oi oi-eye" aria-hidden="true"></span></a>*@
+                                <a class="btn btn-global me-1" title="Modifier" href="sectionedit/@item.Id"><span class="oi oi-pencil" aria-hidden="true"></span></a>
+                                <button class="btn btn-global" title="Copier" @onclick="() => Duplicate(item.Id)"><i class="fas fa-copy"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+
+        <h5 class="mt-5 mb-4 title">Sections publiques</h5>
+
+        @if (PublicSection.Count == 0)
+        {
+            <p class="fst-italic text-muted">Il n'y a pas encore de sections publique</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Description</th>
+                        <th scope="col" class="text-end">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in PublicSection)
+                    {
+                        <tr>
+                            <td class="fw-bold">@item.Name</td>
+                            <td>@item.Description</td>
+                            <td class="d-flex align-items-center justify-content-end">
+                                <a class="btn btn-global me-1" title="Voir" href="sectionoverview/@item.Id"><span class="oi oi-eye" aria-hidden="true"></span></a>
+                                <button class="btn btn-global" title="Copier" @onclick="() => Duplicate(item.Id)"><i class="fas fa-copy"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+</div>

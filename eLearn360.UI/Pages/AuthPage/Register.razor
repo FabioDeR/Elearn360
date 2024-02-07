@@ -1,0 +1,104 @@
+﻿@page "/register"
+@using eLearn360.UI.Shared.Component
+
+<PageTitle>Enregistrement</PageTitle>
+
+<div class="container py-4">
+    <h5 class="col title">Enregistrement</h5>
+
+    @if (_loading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <EditForm Model="User" OnValidSubmit="@HandleValidRequest">
+            <div class="container justify-content-center col-12 col-sm-8">
+                <div class="row g-3 py-4 px-sm-5">
+
+                    <div class="col-md-6">
+                        <label for="inputFirstname" class="form-label">Prénom</label>
+                        <InputText type="text" @bind-Value="@User.FirstName" class="form-control" id="inputFirstname" />
+                        <ValidationMessage For="@(() => User.FirstName)" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputName" class="form-label">Nom</label>
+                        <InputText type="text" @bind-Value="@User.LastName" class="form-control" id="inputName" />
+                        <ValidationMessage For="@(() => User.LastName)" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="inputGender" class="form-label">Genre</label>
+                        <select @onchange="GenderSelect" class="form-select @_genderFormValidClass" id="inputGender">
+                            <option value="0" disabled selected>--Selectionnez un genre--</option>
+                            @foreach (var genderitem in GenderList)
+                            {
+                                <option value="@genderitem.Id">@genderitem.Name</option>
+                            }
+                        </select>
+                        @if (_genderFormError)
+                        {
+                            <div class="validation-message">Veuillez selectionner un genre</div>
+                        }
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="inputDate" class="form-label">Date de naissance</label>
+                        <InputDate @bind-Value="@User.Birthday" class="form-control" id="inputDate" />
+                        <ValidationMessage For="@(() => User.Birthday)" />
+                    </div>
+
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Adresse</label>
+                        <InputText class="form-control" @bind-Value="@User.Address" id="inputAddress" />
+                        <ValidationMessage For="@(() => User.Address)" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputZip" class="form-label">Code postal</label>
+                        <InputText class="form-control" @bind-Value="@User.ZipCode" id="inputZip" />
+                        <ValidationMessage For="@(() => User.ZipCode)" />
+                    </div>
+                    <div class="col-md-8">
+                        <label for="inputCity" class="form-label">Ville</label>
+                        <InputText class="form-control" @bind-Value="@User.City" id="inputCity"></InputText>
+                        <ValidationMessage For="@(() => User.City)" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputCountry" class="form-label">Pays</label>
+                        <InputText class="form-control" @bind-Value="@User.Country" id="inputCountry" />
+                        <ValidationMessage For="@(() => User.Country)" />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="inputPhone" class="form-label">Téléphone</label>
+                        <InputText class="form-control" @bind-Value="@User.Phone" id="inputPhone" placeholder="+32..."></InputText>
+                        <ValidationMessage For="@(() => User.Phone)" />
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="inputMail" class="form-label">Adresse email</label>
+                        <InputText class="form-control" @bind-Value="@User.LoginMail" id="inputMail" />
+                        <ValidationMessage For="@(() => User.LoginMail)" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPassword" class="form-label">Mot de passe</label>
+                        <InputText class="form-control" type="password" @bind-Value="@User.Password" id="inputPassword" />
+                        <ValidationMessage For="@(() => User.Password)" />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="inputConformPassword" class="form-label">Confirmation mot de passe</label>
+                        <InputText class="form-control" type="password" @bind-Value="@User.ConfirmPassword" id="inputConfirmPassword" />
+                        <ValidationMessage For="@(() => User.ConfirmPassword)" />
+                    </div>
+                </div>
+
+                <div class="px-sm-5">
+                    <button type="submit" class="btn btn-global me-4">S'enregistrer</button>
+                    <NavLink href="/" class="btn btn-global-outline">Annuler</NavLink>
+                </div>
+
+            </div>
+
+
+            <DataAnnotationsValidator />
+        </EditForm>
+    }
+</div>

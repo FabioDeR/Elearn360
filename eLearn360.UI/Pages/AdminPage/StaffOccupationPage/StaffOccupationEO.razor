@@ -1,0 +1,77 @@
+﻿@page "/staffoccupationeo"
+@page "/staffoccupationeo/{StaffOccupationId:guid}"
+@using eLearn360.UI.Components.Modal
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <h5 class="col pt-5 fw-bold">@(StaffOccupationId == new Guid() ? "Ajouter" : "Modifier") un poste : @Organization.Name</h5>
+
+        <EditForm Model="StaffOccupation" OnValidSubmit="@HandleValidRequest">
+            <div class="col-12 col-sm-6">
+                <div class="py-4">
+                    <div class="mb-3">
+                        <label for="inputName" class="form-label">Nom</label>
+                        <div class="d-flex">
+                            <InputText class="form-control" id="inputName" @bind-Value="@StaffOccupation.Name" />
+                            <button type="submit" class="btn btn-global ms-4">Enregistrer</button>
+                            <ValidationMessage For="@(() => StaffOccupation.Name)" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <DataAnnotationsValidator />
+        </EditForm>
+
+
+        <table class="table table-hover my-5">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col" class="text-end">Éditer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (StaffOccupationList != null)
+                {
+                    @foreach (var occupation in StaffOccupationList)
+                    {
+                        <tr>
+                            <td class="fw-bold">@occupation.Name</td>
+                            <td class="text-end">
+                                <button type="button" @onclick="() => Update(occupation.Id)" class="btn btn-global me-2" title="Modifier"><span class="oi oi-pencil" aria-hidden="true"></span></button>
+                                <button type="button" @onclick="() => OpenAcceptDialog(occupation.Id)" class="btn btn-danger" title="Supprimer"><span class="oi oi-minus" aria-hidden="true"></span></button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>Vous n'avez pas encore de postes dans cet organisme</td>
+                        <td></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+</div>
+
+@if (AcceptDialogOpen)
+{
+    <ModalDialog Title="Confirmation"
+             Text="Êtes-vous sûr de vouloir supprimer cet élément ?"
+             OnClose="OnAcceptDialogClose"
+             DialogType="ModalDialog.ModalDialogType.YesCancel">
+    </ModalDialog>
+}

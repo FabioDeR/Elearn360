@@ -1,0 +1,101 @@
+﻿@page "/sectionedit"
+@page "/sectionedit/{id:guid}"
+@using eLearn360.UI.Components.SectionComponent
+@using eLearn360.UI.Components.CkeditorComponent
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Policy = Policies.IsProfessor)]
+
+<PageTitle>Section</PageTitle>
+
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <div class="d-flex justify-content-center mb-3">
+            <div class="d-flex w-50 justify-content-around">
+                <button class="circleTab" @onclick="ShowCreateSection">1</button>
+                <span class="line"></span>
+                <button class="circleTab @InactiveClassAdd" disabled="@IsInactive" @onclick="ShowAddLessons">2</button>
+                <span class="line"></span>
+                <button class="circleTab @InactiveClassOrganize" disabled="@IsInactive" @onclick="ShowOrganizeLessons">3</button>
+            </div>
+        </div>
+
+        <div>
+            @if (IsShowCreateSection)
+            {
+                <div class="p-4 border shadow">
+
+                    <h3 class="title mb-4">Créer votre section</h3>
+
+                    <EditForm Model="@SectionData" OnValidSubmit="@HandleValidRequest">
+                        <div class="form-group">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="col-12 col-md-8">
+                                    <label for="inputName" class="col-form-label">Nom de la section</label>
+                                    <div>
+                                        <InputText class="form-control" @bind-Value="@SectionData.Name" id="inputName" placeholder="Nom de la section"></InputText>
+                                        <ValidationMessage For="@(() => SectionData.Name)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 offset-2">
+                                    <label for="inputIsPrivate" class="col-form-label text-left px-0 labelPrivate">@(SectionData.PrivateSection ? "Section Privée" : "Section Publique")</label>
+                                    <div>
+                                        <label for="myToggle" class="toggle">
+                                            <InputCheckbox class="toggle__input d-none" name="" id="myToggle" @bind-Value="@SectionData.PrivateSection" />
+                                            <div class="toggle__fill"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label for="inputDescription" class="col-form-label">Description</label>
+                            <div class="col mb-5">
+                                <InputTextArea class="form-control" @bind-Value="@SectionData.Description" id="inputDescription" placeholder="Ajoutez une brève description"></InputTextArea>
+                                <ValidationMessage For="@(() => SectionData.Description)" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <eLearn360.UI.Components.CkeditorComponent.CkeditorComponent @bind-EditorValue="@SectionData.Content" EditorHeight="600px" EditorWidth="100%"></eLearn360.UI.Components.CkeditorComponent.CkeditorComponent>
+                            <ValidationMessage For="@(() => SectionData.Content)" />
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-global mt-5">Suivant</button>
+                        </div>
+                        <DataAnnotationsValidator />
+                    </EditForm>
+                </div>
+            }
+
+
+            @if (IsShowAddLessons)
+            {
+                <div class="p-4 border shadow">
+                    <CascadingValue Value="@SectionId">
+                        <AddLessons />
+                    </CascadingValue>
+                    <div class="d-flex justify-content-end">
+                        <button @onclick="ShowOrganizeLessons" class="btn btn-global mt-5">Suivant</button>
+                    </div>
+                </div>
+            }
+
+
+            @if (IsShowOrganizeLessons)
+            {
+                <div class="p-4 border shadow">
+                    <CascadingValue Value="@SectionId">
+                        <OrganizeLessons />
+                    </CascadingValue>
+                </div>
+            }
+        </div>
+    }
+</div>

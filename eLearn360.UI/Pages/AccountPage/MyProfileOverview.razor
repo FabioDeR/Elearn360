@@ -1,0 +1,89 @@
+﻿@page "/myprofileoverview"
+@using eLearn360.UI.Shared.Component
+
+<div class="container my-5">
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+
+        <h5 class="col title">Mon profil</h5>
+
+        <div class="row g-4 mt-0 mt-md-4">
+            <div class="col-12 col-md-4 text-end">
+                <img src="@Item.ImageUrl" class="border shadow-sm edit-image" />
+                <div class="row my-5">
+                    <div>
+                        <a href="myprofileedit/@UserId" title="Éditer" class="btn btn-global"><i class="bi bi-pencil-square me-3"></i>Modifier le profil</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 offset-md-1 col-md-7">
+
+                <h4 class="fw-bold mb-5">@Item.FirstName @Item.LastName</h4>
+
+                <h6 class="fw-bold text-uppercase mb-4" style="color:#9D9D9D">Informations principales</h6>
+
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Téléphone</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p><a href="phoneto:@Item.Phone" class="link-text">@Item.Phone</a></p>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Adresse</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p class="mb-0">@Item.Address</p>
+                        <p class="mb-0">@Item.ZipCode @Item.City</p>
+                        <p>@Item.Country</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Email</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p><a href="mailto:@Item.LoginMail" class="link-text">@Item.LoginMail</a></p>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold text-uppercase my-4" style="color:#9D9D9D">Informations complémentaires</h6>
+
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Date de naissance</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p>@Item.Birthday.ToShortDateString()</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="fw-bold">Genre</h6>
+                    </div>
+
+                    <div class="col-9">
+                        <p>@GenderString</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    }
+
+</div>

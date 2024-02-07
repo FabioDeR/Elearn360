@@ -1,0 +1,27 @@
+﻿<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <div class="text-center w-100 mt-5 pt-5">
+                        <span class="d-block"><i class="bi bi-exclamation-triangle text-danger" style="font-size: 96px;"></i></span>
+                        <h1 class="mt-4">Accès non autorisé !</h1>
+                    </div>                   
+                </NotAuthorized>
+                <Authorizing>
+                    <h4>Authentification en cours...</h4>
+                </Authorizing>
+            </AuthorizeRouteView>
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+                <div class="text-center w-100 mt-5 pt-5">
+                    <img src="image/404.png" height="96" class="mb-4"/>
+                    <h1 class="mt-4">On dirait que cette page n'existe pas...</h1>
+                </div>
+            </LayoutView>
+    </NotFound>
+</Router>
+</CascadingAuthenticationState>

@@ -1,0 +1,55 @@
+﻿@page "/login"
+@using eLearn360.UI.Shared.Component
+
+<PageTitle>Connexion</PageTitle>
+
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <h5 class="col title">Connexion</h5>
+
+        <EditForm Model="User" OnValidSubmit="@HandleValidRequest">
+            <div class="container justify-content-center col-12 col-sm-6">
+                <div class="py-4 px-sm-5">
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <InputText type="email" class="form-control" id="inputEmail" @bind-Value="@User.Email" />
+                        <ValidationMessage For="@(() => User.Email)" />
+
+                    </div>
+                    <div class="mb-5">
+                        <label for="inputPassword" class="form-label">Mot de passe</label>
+                        <InputText type="password" class="form-control" id="inputPassword" @bind-Value="@User.Password" />
+                        <ValidationMessage For="@(() => User.Password)" />
+                    </div>
+
+                    <button type="submit" class="btn btn-global me-4">Se connecter</button>
+                    <NavLink href="/" class="btn btn-global-outline">Annuler</NavLink>
+
+                    <div class="text-danger">@message</div>
+                </div>
+            </div>
+            <DataAnnotationsValidator />
+        </EditForm>
+
+        <div class="form-group row">
+            <div class="col-md-5 offset-md-3">
+                <p class="ps-5 link-text cursor-pointer" @onclick="() => OpenAcceptDialog()">J'ai oublié mon mot de passe</p>
+            </div>
+        </div>
+    }
+</div>
+
+@if (AcceptDialogOpen)
+{
+
+    <PasswordResetModal OnClose="@OnAcceptDialogClose">
+    </PasswordResetModal>
+}
+
+

@@ -1,0 +1,82 @@
+﻿@page "/userorganizationadd/{OrganizationId:guid}"
+@using eLearn360.UI.Shared.Component
+@using eLearn360.Data.VM.Policies
+@attribute [Authorize(Roles = "Admin, SuperAdmin")]
+<div class="container my-5">
+
+    @if (_isLoading)
+    {
+        <Loader />
+    }
+    else
+    {
+        <EditForm Model="UserHasOccupationVM" OnSubmit="@HandleRequest">
+
+            <h5 class="col title">Ajouter un utilisateur : @organizationName</h5>
+
+            <div class="container justify-content-center col-12 col-sm-8">
+                <div class="row py-4">
+
+                    <div class="col-12 col-md-4">
+                        <label for="inputGender" class="form-label">Genre</label>
+                        <select @onchange="GenderSelect" class="form-select @_genderFormValidClass" id="inputGender">
+                            <option value="0" disabled selected>--Selectionnez un genre--</option>
+                            @foreach (var genderitem in GenderList)
+                            {
+                                <option value="@genderitem.Id">@genderitem.Name</option>
+                            }
+                        </select>
+                        @if (_genderFormError)
+                        {
+                            <div class="validation-message">Veuillez selectionner un genre</div>
+                        }
+                    </div>
+
+                    <div class="row g-3 col-12">
+                        <div class="col-12 col-md-6">
+                            <label for="inputFirstname" class="form-label">Prénom</label>
+                            <InputText class="form-control" id="inputFirstname" @bind-Value="UserHasOccupationVM.FirstName" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="inputName" class="form-label">Nom</label>
+                            <InputText class="form-control" id="inputName" @bind-Value="UserHasOccupationVM.LastName" />
+                        </div>
+                    </div>
+
+                    <div class="row g-3 col-12">
+                        <div class="col-12 col-md-6">
+                            <label for="inputMail" class="form-label">Adresse email</label>
+                            <InputText class="form-control" id="inputMail" @bind-Value="UserHasOccupationVM.LoginMail" />
+                            <ValidationMessage For="@(() => UserHasOccupationVM.LoginMail)" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="inputPhone" class="form-label">Téléphone</label>
+                            <InputText class="form-control" id="inputPhone" @bind-Value="UserHasOccupationVM.Phone" placeholder="+32..." />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 my-5">
+                        <label class="col-2 fw-bold mb-1">Rôle</label>
+                        <CheckBoxList Data="@OccupationList"
+                                  TextField="@((item)=>item.NormalizedName)"
+                                  ValueField="@((item)=>item.Id)"
+                                  SelectedValues="@UserOccupationList" />
+                        @if (_occupationFormError)
+                        {
+                            <div class="validation-message">Veuillez selectionner un rôle</div>
+                        }
+                    </div>
+
+                    <div class="d-flex w-100 justify-content-between">
+                        <a href="userorganizationlistoverview/@OrganizationId" class="btn btn-global-outline"><i class="bi bi-caret-left-fill me-2"></i>Liste des utilisateurs</a>
+                        <button type="submit" class="btn btn-global">Enregistrer</button>
+                    </div>
+                </div>
+
+
+            </div>
+            <DataAnnotationsValidator />
+
+        </EditForm>
+    }
+</div>
