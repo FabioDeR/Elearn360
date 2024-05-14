@@ -102,7 +102,7 @@ namespace eLearn360.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("45aee173-5ded-40a1-8802-12aaba2621b9"),
+                            Id = new Guid("d7513e4f-8204-45cc-9715-f117d60f710f"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Education",
@@ -110,7 +110,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("238e08cd-1ecf-45e5-8578-2def6e3c5cbb"),
+                            Id = new Guid("79ddda6d-0cad-46db-8272-a986e2a85593"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Autre",
@@ -405,7 +405,7 @@ namespace eLearn360.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5d259555-d134-4450-babe-231297cce3ee"),
+                            Id = new Guid("7a985540-74d1-4231-bf87-b8bede08ca58"),
                             Abbreviated = "Mme.",
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -414,7 +414,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a8c7953e-b80f-4478-9ce4-7bd3ff6c1555"),
+                            Id = new Guid("216e65d3-9b67-4a1b-bb02-81a4b45c4391"),
                             Abbreviated = "M.",
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -423,7 +423,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e0d3f351-e651-49ae-8353-23a4128ba58f"),
+                            Id = new Guid("32992fa3-ba8b-4f0a-abc4-bdf60a3e1028"),
                             Abbreviated = "X.",
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -481,11 +481,11 @@ namespace eLearn360.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("641fa66a-dfa4-41e6-9cf6-addccd7eca94"),
+                            Id = new Guid("cc5d987d-5d11-4e90-b634-c952e891f4cb"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Public",
-                            OrganizationId = new Guid("64ae86c3-2dda-41ca-ba57-a8b93db5f9cc"),
+                            OrganizationId = new Guid("45338333-202d-47bf-a54c-4a58b945f340"),
                             UpdateTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
@@ -752,7 +752,7 @@ namespace eLearn360.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ebe05779-3da2-449a-a491-737e1da3c937"),
+                            Id = new Guid("b9d7c73a-a1a2-40d1-aad8-bd2cdd5c32ec"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Novice",
@@ -760,7 +760,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("871e8391-d09f-41a7-98f3-182be80e0f34"),
+                            Id = new Guid("edad484c-9d4e-4f32-921c-6bf97cea79eb"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Confirmé",
@@ -768,7 +768,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c934a922-1a60-4a3f-a923-0a529bc86b0e"),
+                            Id = new Guid("9225acaf-42a8-4405-a6f9-03cc8cd38cfb"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Expert",
@@ -829,8 +829,7 @@ namespace eLearn360.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0134ef72-919b-45e2-ad0e-6a42cbf81922"),
-                            ConcurrencyStamp = "cf172cc9-b407-4ece-a4e2-856dc1deb39f",
+                            Id = new Guid("7577b83e-ac43-4dbd-94b1-7b3e1ea296ae"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             NormalizedName = "SuperAdmin",
@@ -839,8 +838,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("86d88b58-b858-4773-b690-72d2469c8f10"),
-                            ConcurrencyStamp = "cb3609cd-f9a8-48de-8462-bb20f2b5d082",
+                            Id = new Guid("bf21335a-2a0f-40c0-9936-00254f90510b"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             NormalizedName = "Admin",
@@ -849,8 +847,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a7e6270c-ecc5-4acf-aa1d-2a0fee3a4426"),
-                            ConcurrencyStamp = "ede53f32-a2c7-4c97-8371-1f1ba419147c",
+                            Id = new Guid("a73d6ebf-d83a-41b0-b56f-16b268ab29c8"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             NormalizedName = "Professeur",
@@ -859,8 +856,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d99a67de-96ce-4d00-b200-462c62d7fc41"),
-                            ConcurrencyStamp = "5f4e30eb-5fe7-46d5-8a69-b48f7aaf410a",
+                            Id = new Guid("c86a20ba-0a68-4220-a436-57e250b11bb4"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             NormalizedName = "Visiteur",
@@ -869,8 +865,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f2ea6b39-e40d-40a3-b551-394a64129b59"),
-                            ConcurrencyStamp = "6c76be5a-90a4-40bf-a9f7-28e4c03ea70f",
+                            Id = new Guid("df29c577-d408-41eb-9d18-30b6dcbe9300"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             NormalizedName = "Étudiant",
@@ -879,8 +874,7 @@ namespace eLearn360.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e4e0f8fd-6bc1-49e5-a473-11f8202d0cd2"),
-                            ConcurrencyStamp = "aed37e1f-4736-484e-8102-e917eb0a5c4c",
+                            Id = new Guid("744132f2-ed00-4ac3-af6a-da857dd19d93"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             NormalizedName = "Tuteur",
@@ -955,7 +949,7 @@ namespace eLearn360.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("64ae86c3-2dda-41ca-ba57-a8b93db5f9cc"),
+                            Id = new Guid("45338333-202d-47bf-a54c-4a58b945f340"),
                             Address = "Rue de Tubize 40",
                             City = " Ittre",
                             Country = "Be",
@@ -1849,26 +1843,26 @@ namespace eLearn360.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ade3bf12-8aca-47ad-bc7a-572948226621"),
+                            Id = new Guid("f9e2c8ef-189a-49d4-b529-1794e091b95d"),
                             AccessFailedCount = 0,
                             Address = "Rue de Virginal 40",
-                            Birthday = new DateTime(2023, 10, 3, 5, 51, 32, 348, DateTimeKind.Local).AddTicks(5843),
+                            Birthday = new DateTime(2024, 5, 14, 21, 2, 3, 54, DateTimeKind.Local).AddTicks(2731),
                             City = "Virginal",
                             ConcurrencyStamp = "e186463d-5e90-4174-b04f-8ee1240f6bf8",
                             Country = "Be",
-                            CreationDate = new DateTime(2023, 10, 3, 5, 51, 32, 348, DateTimeKind.Local).AddTicks(5877),
+                            CreationDate = new DateTime(2024, 5, 14, 21, 2, 3, 54, DateTimeKind.Local).AddTicks(2777),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Email = "kjouret@educassist.be",
                             EmailConfirmed = true,
                             FirstName = "Kevin",
-                            GenderId = new Guid("a8c7953e-b80f-4478-9ce4-7bd3ff6c1555"),
+                            GenderId = new Guid("216e65d3-9b67-4a1b-bb02-81a4b45c4391"),
                             LastName = "Jouret",
                             LockoutEnabled = true,
                             LoginMail = "kjouret@educassist.be",
                             NormalizedEmail = "KJOURET@EDUCASSIST.BE",
                             NormalizedUserName = "KJOURET@EDUCASSIST.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEkr3VDDQoZs+mcc1PKqb+kqQDK/FCpRUQt5pevvTHravL3Q6dDqK0GU6AG8yiHeEg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJe2lkmeeFhYYctUIHuiVyynbbZ0owWGlmwu3b+LbgOz2GUpLwn/23izywFpoxDH1w==",
                             Phone = "0202020202",
                             PhoneNumber = "0202020202",
                             PhoneNumberConfirmed = false,
@@ -1976,15 +1970,15 @@ namespace eLearn360.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f4e9d5a8-59fa-4bda-8631-98f1ca8e4bad"),
+                            Id = new Guid("40736d30-1d1e-497c-a00c-aeb1bba195e5"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            GroupId = new Guid("641fa66a-dfa4-41e6-9cf6-addccd7eca94"),
+                            GroupId = new Guid("cc5d987d-5d11-4e90-b634-c952e891f4cb"),
                             IsHeadTeacher = false,
                             StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UpdateTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UserId = new Guid("ade3bf12-8aca-47ad-bc7a-572948226621")
+                            UserId = new Guid("f9e2c8ef-189a-49d4-b529-1794e091b95d")
                         });
                 });
 
@@ -2034,13 +2028,43 @@ namespace eLearn360.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6aaeb774-ec97-42ed-b80c-8ff60fb2229d"),
+                            Id = new Guid("d3e4bbfb-e735-4079-bd08-2cb7a789c6e1"),
                             CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
                             DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            OccupationId = new Guid("0134ef72-919b-45e2-ad0e-6a42cbf81922"),
-                            OrganizationId = new Guid("64ae86c3-2dda-41ca-ba57-a8b93db5f9cc"),
+                            OccupationId = new Guid("7577b83e-ac43-4dbd-94b1-7b3e1ea296ae"),
+                            OrganizationId = new Guid("45338333-202d-47bf-a54c-4a58b945f340"),
                             UpdateTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UserId = new Guid("ade3bf12-8aca-47ad-bc7a-572948226621")
+                            UserId = new Guid("f9e2c8ef-189a-49d4-b529-1794e091b95d")
+                        },
+                        new
+                        {
+                            Id = new Guid("fe4f7134-dce1-4015-9232-c99f8e2a3d27"),
+                            CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            OccupationId = new Guid("bf21335a-2a0f-40c0-9936-00254f90510b"),
+                            OrganizationId = new Guid("45338333-202d-47bf-a54c-4a58b945f340"),
+                            UpdateTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            UserId = new Guid("f9e2c8ef-189a-49d4-b529-1794e091b95d")
+                        },
+                        new
+                        {
+                            Id = new Guid("e2595c18-e364-45c9-8f76-75880d7561d3"),
+                            CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            OccupationId = new Guid("a73d6ebf-d83a-41b0-b56f-16b268ab29c8"),
+                            OrganizationId = new Guid("45338333-202d-47bf-a54c-4a58b945f340"),
+                            UpdateTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            UserId = new Guid("f9e2c8ef-189a-49d4-b529-1794e091b95d")
+                        },
+                        new
+                        {
+                            Id = new Guid("c576cf88-e017-45f9-993f-4c32fc7bc2c0"),
+                            CreationTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DeleteTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            OccupationId = new Guid("df29c577-d408-41eb-9d18-30b6dcbe9300"),
+                            OrganizationId = new Guid("45338333-202d-47bf-a54c-4a58b945f340"),
+                            UpdateTrackingUserId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            UserId = new Guid("f9e2c8ef-189a-49d4-b529-1794e091b95d")
                         });
                 });
 

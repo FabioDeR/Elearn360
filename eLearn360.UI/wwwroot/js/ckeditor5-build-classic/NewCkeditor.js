@@ -29,7 +29,7 @@
 		// integration to choose the right communication channel. This example uses
 		// a POST request with JSON as a data structure but your configuration
 		// could be different.
-		xhr.open('POST', 'https://elearn360api.azurewebsites.net/api/Images', true);
+		xhr.open('POST', 'https://localhost:7256/api/Images', true);
 		xhr.responseType = 'json';
 	}
 

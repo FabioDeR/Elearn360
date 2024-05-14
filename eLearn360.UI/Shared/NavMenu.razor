@@ -27,7 +27,7 @@ else
                             }
                         </InputSelect>
                     </EditForm>
-
+                    
                 </AuthorizeView>
 
                 @*HAMBURGER BUTTON*@
@@ -42,7 +42,7 @@ else
                 <ul class="navbar-nav mt-2 mt-lg-0 mx-auto">
 
                     @*NAVBAR SUPER-ADMIN ITEMS*@
-                <AuthorizeView Policy="@Policies.IsSuperAdmin">
+                    <AuthorizeView Policy="@Policies.IsSuperAdmin">
                         <li class="nav-item dropdown">
                             <NavLink class="nav-link fw-bold dropdown-toggle py-3 ps-2 px-lg-2 px-xl-3 px-xxl-6 text-uppercase" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Super-Admin
@@ -77,7 +77,8 @@ else
                     </AuthorizeView>
 
                     @*NAVBAR TRAINER ITEMS*@
-                   
+                    <AuthorizeView Policy="@Policies.IsProfessor">
+
                         <li class="nav-item dropdown">
                             <NavLink class="nav-link fw-bold dropdown-toggle py-3 ps-2 px-lg-2 px-xl-3 px-xxl-6 text-uppercase" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Formateur
@@ -92,7 +93,7 @@ else
                                 <NavLink class="dropdown-item" href="mygrouplistoverview">Liste des groupes</NavLink>
                             </div>
                         </li>
-                                 
+                    </AuthorizeView>
 
                     @*NAVBAR STUDENT ITEMS*@
                     <AuthorizeView Policy="@Policies.IsStudent">
@@ -115,7 +116,7 @@ else
                             </NavLink>
                         </li>
                     </AuthorizeView>
-                </ul>             
+                </ul>
             </div>
         </nav>
     </div>

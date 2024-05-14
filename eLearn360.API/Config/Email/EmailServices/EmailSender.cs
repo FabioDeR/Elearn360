@@ -130,14 +130,18 @@ namespace elearn360.API.Config.Email.EmailServices
         #region Sennd Email
         private async Task SendAsync(MimeMessage mailMessage)
         {
+           
             using (var client = new SmtpClient())
             {
                 try
                 {                    
                     client.CheckCertificateRevocation = false;
                     await client.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, true);
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    await client.AuthenticateAsync(_emailConfig.UserName, _emailConfig.Password);                  
+                    client.AuthenticationMechanisms.Remove("XOAUTH2");                    
+                    await client.AuthenticateAsync(_emailConfig.UserName, _emailConfig.Password); 
+                    
+
+
                  
                     await client.SendAsync(mailMessage);
                 }

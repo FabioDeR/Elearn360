@@ -124,23 +124,26 @@ namespace eLearn360.Data.DBContext
             Guid OrganismeGuid = Guid.NewGuid();
             Guid GenderGuid = Guid.NewGuid();
             Guid UserGuid = Guid.NewGuid();
-            Guid OccupationGuid = Guid.NewGuid();
+            Guid OccupationGuidSuperAdmin = Guid.NewGuid();
+            Guid OccupationGuidAdmin = Guid.NewGuid();
+            Guid OccupationGuidProfessor = Guid.NewGuid();
+            Guid OccupationGuidStudent = Guid.NewGuid();
             builder.Entity<Occupation>().HasData(
            new Occupation
            {
-               Id = OccupationGuid,
+               Id = OccupationGuidSuperAdmin,
                OccupationName = "SuperAdmin",
                NormalizedName = "SuperAdmin"
            },
             new Occupation
             {
-                Id = Guid.NewGuid(),
+                Id = OccupationGuidAdmin,
                 OccupationName = "Admin",
                 NormalizedName = "Admin"
             },
              new Occupation
              {
-                 Id = Guid.NewGuid(),
+                 Id = OccupationGuidProfessor,
                  OccupationName = "Professor",
                  NormalizedName = "Professeur"
              },
@@ -152,7 +155,7 @@ namespace eLearn360.Data.DBContext
               },
                new Occupation
                {
-                   Id = Guid.NewGuid(),
+                   Id = OccupationGuidStudent,
                    OccupationName = "Student",
                    NormalizedName = "Étudiant"
                },
@@ -199,7 +202,7 @@ namespace eLearn360.Data.DBContext
                     Id = UserGuid,
                     NormalizedUserName = "KJOURET@EDUCASSIST.BE",
                     EmailConfirmed = true,
-                    PasswordHash = "AQAAAAEAACcQAAAAEEkr3VDDQoZs+mcc1PKqb+kqQDK/FCpRUQt5pevvTHravL3Q6dDqK0GU6AG8yiHeEg==",
+                    PasswordHash = "AQAAAAIAAYagAAAAEJe2lkmeeFhYYctUIHuiVyynbbZ0owWGlmwu3b+LbgOz2GUpLwn/23izywFpoxDH1w==",
                     SecurityStamp = "REMB6AADPUCZ7YLKWCN6MFX3HOMII7WL",
                     ConcurrencyStamp = "e186463d-5e90-4174-b04f-8ee1240f6bf8",
                     PhoneNumberConfirmed = false,
@@ -221,7 +224,28 @@ namespace eLearn360.Data.DBContext
                new UserHasOccupation
                {
                    Id = Guid.NewGuid(),
-                   OccupationId = OccupationGuid,
+                   OccupationId = OccupationGuidSuperAdmin,
+                   UserId = UserGuid,
+                   OrganizationId = OrganismeGuid
+               },
+               new UserHasOccupation
+               {
+                   Id = Guid.NewGuid(),
+                   OccupationId = OccupationGuidAdmin,
+                   UserId = UserGuid,
+                   OrganizationId = OrganismeGuid
+               },
+               new UserHasOccupation
+               {
+                   Id = Guid.NewGuid(),
+                   OccupationId = OccupationGuidProfessor,
+                   UserId = UserGuid,
+                   OrganizationId = OrganismeGuid
+               },
+               new UserHasOccupation
+               {
+                   Id = Guid.NewGuid(),
+                   OccupationId = OccupationGuidStudent,
                    UserId = UserGuid,
                    OrganizationId = OrganismeGuid
                }
